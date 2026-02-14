@@ -19,7 +19,13 @@ This server addresses these by providing:
 - **Natural language**: Search and update records conversationally (experimental)
 - **Allowlisting**: Table and Script Include access controls
 
-**Tested on**: Vancouver, Washington, and current ServiceNow releases (compatibility varies by plugin availability)
+## 🚀 Getting Started
+
+**New to Claude Desktop or MCP servers?** Start with our comprehensive installation guide:
+
+**📖 [Complete Installation Guide](docs/INSTALLATION.md)**
+
+This guide covers everything from installing Claude Desktop for the first time to configuring and testing this MCP server.
 
 ## Features
 
@@ -56,6 +62,10 @@ This server addresses these by providing:
 
 ## Installation
 
+For detailed step-by-step instructions, see the **[Complete Installation Guide](docs/INSTALLATION.md)**.
+
+### Quick Setup
+
 \`\`\`bash
 # Clone the repository
 git clone https://github.com/habenani-p/servicenow-mcp.git
@@ -66,10 +76,9 @@ npm install
 
 # Build
 npm run build
-
-# Run
-npm start
 \`\`\`
+
+**Next Steps**: See [INSTALLATION.md](docs/INSTALLATION.md) for Claude Desktop configuration, OAuth setup, and testing.
 
 ## Configuration
 
@@ -104,8 +113,11 @@ WRITE_ENABLED=false
 
 ## Documentation
 
+- **[Installation Guide](docs/INSTALLATION.md)** - Complete setup instructions (first-time users start here)
+- **[OAuth Setup Guide](docs/SERVICENOW_OAUTH_SETUP.md)** - ServiceNow OAuth 2.0 configuration
+- **[Usage Examples](EXAMPLES.md)** - 16+ detailed examples and workflows
+- **[Security Policy](SECURITY.md)** - Security best practices
 - **Full Documentation**: https://habenani-p.github.io/servicenow-mcp/
-- **Usage Examples**: See [EXAMPLES.md](EXAMPLES.md) for real-world scenarios and code samples
 
 ## Official ServiceNow Documentation References
 
