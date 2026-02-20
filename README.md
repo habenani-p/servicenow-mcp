@@ -1,126 +1,516 @@
-# ServiceNow MCP Server
+<div align="center">
 
-A production-ready Model Context Protocol (MCP) server for ServiceNow platform integration. Built with TypeScript for Node.js 20+, this server enables LLMs and AI assistants to interact with ServiceNow instances through a standardized interface.
+<img src="docs/assets/banner.svg" alt="now-ai-kit — The Most Advanced & Comprehensive ServiceNow MCP Server" width="100%"/>
 
-## Why This Exists
+<br/>
 
-If you work with ServiceNow, you know these pain points:
+[![Downloads](https://img.shields.io/badge/downloads-200%2B-6366f1?style=flat-square)](https://github.com/habenani-p/servicenow-mcp)
+[![GitHub Forks](https://img.shields.io/github/forks/habenani-p/servicenow-mcp?style=flat-square&color=0ea5e9&label=forks)](https://github.com/habenani-p/servicenow-mcp/network/members)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b?style=flat-square)](LICENSE)
+[![ServiceNow](https://img.shields.io/badge/ServiceNow-Latest%20Release-00c7b4?style=flat-square)](https://developer.servicenow.com)
+[![MCP](https://img.shields.io/badge/MCP-Model%20Context%20Protocol-8b5cf6?style=flat-square)](https://modelcontextprotocol.io)
 
-1. **Integration complexity**: Every integration reinvents the wheel for authentication, error handling, and rate limiting
-2. **Manual data gathering**: Pulling information from multiple tables and modules is time-consuming
-3. **ITOM visibility**: Getting a quick view of Discovery status, MID servers, or CMDB health requires clicking through multiple dashboards
-4. **Safe automation**: You want to automate reads but fear accidental writes
-5. **Script maintenance**: Updating Script Includes or Business Rules through the UI is tedious
+<br/>
 
-This server addresses these by providing:
-- **Safe-by-default**: Read-only unless you explicitly enable writes
-- **Battle-tested patterns**: OAuth + retry logic + input validation built in
-- **ITOM-first**: Discovery, Event Management, Service Mapping, and CMDB health out of the box
-- **Natural language**: Search and update records conversationally (experimental)
-- **Allowlisting**: Table and Script Include access controls
+**now-ai-kit** is the most advanced, comprehensive, and thoroughly tested ServiceNow MCP server available.
+It provides complete coverage across all major ServiceNow modules using the latest ServiceNow API references,
+with seamless, production-ready integration across all major AI providers and SDKs.
 
-## Any AI Provider or SDK
+<br/>
 
-Works out of the box with every major AI interface — no custom connectors required:
+</div>
 
-| Client / Interface | Type | Notes |
-|--------------------|------|-------|
-| **Claude Desktop** | Desktop app | Native MCP support |
-| **Claude Code** | CLI | Native MCP support |
-| **Cursor** | AI code editor | MCP via settings |
-| **Windsurf** (Codeium) | AI code editor | MCP via settings |
-| **GitHub Copilot** (VS Code) | IDE extension | MCP via VS Code settings |
-| **Continue.dev** | VS Code / JetBrains | MCP via config.json |
-| **Cline** | VS Code extension | MCP via extension settings |
-| **Zed** | AI editor | MCP via assistant panel |
-| **Amazon Q Developer** | IDE / CLI | MCP via toolkit settings |
-| **JetBrains AI Assistant** | IDE plugin | MCP via plugin settings |
-| **Gemini CLI** | CLI | MCP via tool config |
-| **OpenAI SDK / GPT-4o** | SDK / API | Via any MCP-to-OpenAI bridge |
-| **Ollama + Llama 3** | Local models | Via any MCP-compatible host |
+---
 
-**OAuth 2.0 and Basic Auth** are supported for every client. **Role-based tool packages** let you expose exactly the right tools per persona — read-only for analysts, full ITSM tools for engineers, ITOM-only for ops teams.
+## Why now-ai-kit
 
-## 🚀 Getting Started
+<table>
+<tr>
+<td width="33%" valign="top">
 
-**New to Claude Desktop or MCP servers?** Start with our comprehensive installation guide:
+### Broadest Module Coverage
 
-**📖 [Complete Installation Guide](docs/INSTALLATION.md)**
+150+ production-ready tools spanning every ServiceNow domain: ITSM, ITOM, HRSD, CSM, SecOps, GRC, Agile, ATF, Flow Designer, Scripting, Reporting, Now Assist, and more. No other MCP server comes close to this depth.
 
-This guide covers everything from installing Claude Desktop for the first time to configuring and testing this MCP server.
+</td>
+<td width="33%" valign="top">
 
-## Features
+### Any AI Provider or SDK
 
-### Core Platform
-- Table schema discovery
-- Query records with filtering, pagination, sorting
-- Get individual records
-- User and group lookups
+Works out of the box with every major AI interface — **Claude**, **ChatGPT**, **Gemini**, **Grok**, **Cursor**, **Windsurf**, **GitHub Copilot**, **Continue**, **Cline**, **Amazon Q**, **JetBrains AI**, **Zed**, **Ollama**, and more. No model-version lock-in. OAuth 2.0 and Basic Auth supported for every client. Role-based tool packages let you expose exactly the right tools per persona.
 
-### CMDB
-- CI retrieval and search
-- Relationship mapping
-- Configuration item details
+</td>
+<td width="33%" valign="top">
 
-### ITOM
-- Discovery schedule monitoring
-- MID server status
-- Event Management (events and alerts)
-- Service Mapping summaries
-- CMDB health metrics
+### Multi-Instance Management
 
-### ITSM
-- Change request creation (write-enabled)
-- Script Include execution (high-risk, requires explicit enabling)
+Connect and query **multiple ServiceNow environments** simultaneously — production, staging, and dev — from a single AI session. Switch instance context on the fly, run cross-environment comparisons, and manage ReleaseOps workflows without leaving your AI assistant.
 
-### Service Portal & Knowledge
-- Portal and page information
-- Knowledge base search and article retrieval
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
 
-### Natural Language (Experimental)
-- Search records using plain English
-- Update records with natural instructions
-- Script file updates
+### Four-Tier Permission Control
+
+A granular, environment-variable-driven permission model ensures every operation is explicitly authorised. Read is always on; write, CMDB, scripting, and Now Assist capabilities each require a dedicated opt-in flag — keeping your instance safe by default.
+
+</td>
+<td width="33%" valign="top">
+
+### Role-Based Tool Packages
+
+Ten pre-built persona packages — service desk, change coordinator, platform developer, ITOM engineer, AI developer, and more. Expose only the tools each role needs, reducing noise and enforcing least-privilege access for every AI client.
+
+</td>
+<td width="33%" valign="top">
+
+### Production-Ready from Day One
+
+Full TypeScript types, 100+ real-world examples, complete reference documentation across 8 guides, and per-client setup guides for all six AI clients. Built on the latest ServiceNow latest release APIs with OAuth 2.0 for every integration.
+
+</td>
+</tr>
+</table>
+
+---
+
+## Quick Links
+
+| Resource | Link |
+|----------|------|
+| All 150+ Tools Reference | [docs/TOOLS.md](docs/TOOLS.md) |
+| Client Setup (Claude, GPT, Gemini, Cursor, VS Code) | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Role-Based Tool Packages | [docs/TOOL_PACKAGES.md](docs/TOOL_PACKAGES.md) |
+| Now Assist & AI Integration | [docs/NOW_ASSIST.md](docs/NOW_ASSIST.md) |
+| ATF Testing Guide | [docs/ATF.md](docs/ATF.md) |
+| Scripting Management | [docs/SCRIPTING.md](docs/SCRIPTING.md) |
+| Reporting & Analytics | [docs/REPORTING.md](docs/REPORTING.md) |
+| Multi-Instance Setup | [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md) |
+| 100+ Real-World Examples | [EXAMPLES.md](EXAMPLES.md) |
+| Changelog | [CHANGELOG.md](CHANGELOG.md) |
+
+---
+
+## Module Coverage
+
+17 domain modules covering the full ServiceNow platform:
+
+| Module | Key Capabilities |
+|--------|-----------------|
+| Core & CMDB | Record query, schema discovery, CMDB CIs, ITOM Discovery, MID Servers |
+| Incident Management | Full incident lifecycle — create, update, resolve, close, work notes |
+| Problem Management | Problem records, root cause analysis, known errors |
+| Change Management | Change requests, CAB approvals, closures |
+| Task Management | Generic tasks, my-task lists, completions |
+| Knowledge Base | Search, create, update, publish KB articles |
+| Service Catalog & Approvals | Catalog browsing, order items, SLA tracking, approval workflows |
+| User & Group Management | Users, groups, membership, role assignments |
+| Reporting & Analytics | Aggregate queries, trend analysis, Performance Analytics, scheduled jobs |
+| ATF Testing | Test suites, test execution, ATF Failure Insight |
+| Now Assist / AI | NLQ, AI Search, summaries, resolution suggestions, Agentic Playbooks |
+| Scripting | Business rules, script includes, client scripts, changesets |
+| Agile / Scrum | Stories, epics, sprints, scrum tasks |
+| HR Service Delivery (HRSD) | HR cases, HR services, employee profiles, onboarding/offboarding |
+| Customer Service Management (CSM) | Customer cases, accounts, contacts, products, SLAs |
+| Security Operations & GRC | SecOps incidents, vulnerabilities, GRC risks, controls, threat intel |
+| Flow Designer & Process Automation | Flows, subflows, triggers, executions, Process Automation playbooks |
+
+---
+
+## Authentication
+
+Both **Basic Auth** and **OAuth 2.0** are fully supported across all client integrations:
+
+| Method | Best For |
+|--------|----------|
+| Basic Auth | Development, personal instances, quick setup |
+| OAuth 2.0 Client Credentials | Production deployments, service accounts |
+| OAuth 2.0 Password Grant | Automated CI/CD pipelines |
+
+---
+
+## Permission System
+
+A four-tier permission model keeps your instance safe by default:
+
+| Tier | Environment Variable | Covers |
+|------|---------------------|--------|
+| 0 — Read | *(always on)* | All query and read operations |
+| 1 — Write | `WRITE_ENABLED=true` | Create/update across ITSM, HRSD, CSM, Agile |
+| 2 — CMDB Write | `CMDB_WRITE_ENABLED=true` | CI create/update in the CMDB |
+| 3 — Scripting | `SCRIPTING_ENABLED=true` | Business rules, script includes, changesets |
+| 4 — Now Assist | `NOW_ASSIST_ENABLED=true` | AI Agentic Playbooks, NLQ, AI Search |
+
+---
+
+## Role-Based Tool Packages
+
+Set `MCP_TOOL_PACKAGE` to expose only the tools relevant to each persona:
+
+| Package | Persona | Tools Included |
+|---------|---------|---------------|
+| `full` | Administrators | All 150+ tools |
+| `service_desk` | L1/L2 Agents | Incidents, tasks, approvals, KB, SLA |
+| `change_coordinator` | Change Managers | Changes, CAB, CMDB, approvals |
+| `knowledge_author` | KB Authors | Knowledge base create/publish |
+| `catalog_builder` | Catalog Admins | Catalog, users, groups |
+| `system_administrator` | Sys Admins | Users, groups, reports, logs |
+| `platform_developer` | Developers | Scripts, ATF, changesets |
+| `itom_engineer` | ITOM Engineers | CMDB, Discovery, MID servers, events |
+| `agile_manager` | Scrum Masters | Stories, epics, sprints |
+| `ai_developer` | AI Builders | Now Assist, NLQ, Agentic Playbooks |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js 20+** — [nodejs.org](https://nodejs.org)
+- A **ServiceNow instance** (free developer instance at [developer.servicenow.com](https://developer.servicenow.com))
+- An AI client: Claude Desktop, Claude Code, Cursor, VS Code, or any OpenAI/Gemini-compatible client
+
+### Install
+
+```bash
+# Option A — npm (recommended)
+npm install -g now-ai-kit
+
+# Option B — clone from source
+git clone https://github.com/habenani-p/servicenow-mcp.git
+cd servicenow-mcp
+npm install && npm run build
+```
+
+### Configure
+
+```bash
+cp .env.example .env
+```
+
+Edit `.env`:
+
+```env
+# ServiceNow instance URL (no trailing slash)
+SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com
+
+# Auth method: basic or oauth
+SERVICENOW_AUTH_METHOD=basic
+SERVICENOW_BASIC_USERNAME=your.username
+SERVICENOW_BASIC_PASSWORD=your_password
+
+# Permission gates (start with all off for safety)
+WRITE_ENABLED=false
+CMDB_WRITE_ENABLED=false
+SCRIPTING_ENABLED=false
+NOW_ASSIST_ENABLED=false
+
+# Optional: limit tools to a role package
+# MCP_TOOL_PACKAGE=service_desk
+```
+
+### Connect to Claude Desktop
+
+Find your config file:
+- **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
+- **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
+- **Linux**: `~/.config/Claude/claude_desktop_config.json`
+
+Add the server:
+
+```json
+{
+  "mcpServers": {
+    "now-ai-kit": {
+      "command": "node",
+      "args": ["/absolute/path/to/servicenow-mcp/dist/server.js"],
+      "env": {
+        "SERVICENOW_INSTANCE_URL": "https://yourinstance.service-now.com",
+        "SERVICENOW_AUTH_METHOD": "basic",
+        "SERVICENOW_BASIC_USERNAME": "your.username",
+        "SERVICENOW_BASIC_PASSWORD": "your_password",
+        "WRITE_ENABLED": "false"
+      }
+    }
+  }
+}
+```
+
+Restart Claude Desktop. You will see now-ai-kit listed in the MCP servers panel.
+
+### Connect to Claude Code
+
+```bash
+claude mcp add now-ai-kit node /absolute/path/to/servicenow-mcp/dist/server.js \
+  --env SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com \
+  --env SERVICENOW_AUTH_METHOD=basic \
+  --env SERVICENOW_BASIC_USERNAME=your.username \
+  --env SERVICENOW_BASIC_PASSWORD=your_password
+```
+
+### Connect to Cursor
+
+Create `.cursor/mcp.json` in your project root:
+
+```json
+{
+  "mcpServers": {
+    "now-ai-kit": {
+      "command": "node",
+      "args": ["/absolute/path/to/servicenow-mcp/dist/server.js"],
+      "env": {
+        "SERVICENOW_INSTANCE_URL": "https://yourinstance.service-now.com",
+        "SERVICENOW_AUTH_METHOD": "basic",
+        "SERVICENOW_BASIC_USERNAME": "your.username",
+        "SERVICENOW_BASIC_PASSWORD": "your_password"
+      }
+    }
+  }
+}
+```
+
+For full setup guides for every client (including OAuth 2.0 variants), see [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md).
+
+---
+
+## Example Interactions
+
+Once connected, ask your AI assistant in plain language:
+
+```
+Show me all open P1 incidents assigned to the Network Operations group.
+```
+```
+Create an incident for a VPN outage affecting the London office, high urgency, assign to IT Network team.
+```
+```
+What CMDB CIs does the ERP application depend on?
+```
+```
+Run the Regression Test Suite and show me any failures with ATF Failure Insight details.
+```
+```
+Summarise the last 30 days of incident trends by category.
+```
+```
+Open an HR onboarding case for new employee Jane Smith starting Monday.
+```
+```
+List all high-severity vulnerabilities on production servers that are still open.
+```
+```
+Trigger the Employee Offboarding flow for user john.doe with effective date 2025-03-01.
+```
+```
+Find all customer cases for Acme Corp that are past their SLA breach date.
+```
+```
+Show me GRC risks in the Data Privacy category that are still in draft state.
+```
+
+For 100+ real-world examples with expected inputs, outputs, and advanced workflows, see [EXAMPLES.md](EXAMPLES.md).
+
+---
+
+## Advanced Configuration
+
+### OAuth 2.0
+
+```env
+SERVICENOW_AUTH_METHOD=oauth
+SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com
+SERVICENOW_CLIENT_ID=your_oauth_client_id
+SERVICENOW_CLIENT_SECRET=your_oauth_client_secret
+SERVICENOW_OAUTH_GRANT_TYPE=client_credentials
+```
+
+### Multi-Instance Setup
+
+Manage multiple ServiceNow environments with `instances.json`:
+
+```json
+{
+  "instances": [
+    {
+      "name": "production",
+      "url": "https://prod.service-now.com",
+      "authMethod": "oauth",
+      "clientId": "...",
+      "clientSecret": "..."
+    },
+    {
+      "name": "dev",
+      "url": "https://dev12345.service-now.com",
+      "authMethod": "basic",
+      "username": "admin",
+      "password": "..."
+    }
+  ]
+}
+```
+
+See [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md) for full instructions.
+
+### Docker
+
+```bash
+docker build -t now-ai-kit .
+docker run -e SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com \
+           -e SERVICENOW_AUTH_METHOD=basic \
+           -e SERVICENOW_BASIC_USERNAME=admin \
+           -e SERVICENOW_BASIC_PASSWORD=password \
+           now-ai-kit
+```
+
+---
+
+## Supported AI Clients
+
+| Client | Type | Auth Methods | Config Guide |
+|--------|------|-------------|-------------|
+| Claude Desktop | Desktop app | Basic, OAuth 2.0 | [clients/claude-desktop/SETUP.md](clients/claude-desktop/SETUP.md) |
+| Claude Code | CLI | Basic, OAuth 2.0 | [clients/claude-code/SETUP.md](clients/claude-code/SETUP.md) |
+| ChatGPT / OpenAI | API / Web | Basic, OAuth 2.0 | [clients/openai/SETUP.md](clients/openai/SETUP.md) |
+| Gemini / Vertex AI | API / CLI | Basic, OAuth 2.0 | [clients/gemini/SETUP.md](clients/gemini/SETUP.md) |
+| Grok (xAI) | API / Web | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Cursor | AI code editor | Basic, OAuth 2.0 | [clients/cursor/SETUP.md](clients/cursor/SETUP.md) |
+| Windsurf (Codeium) | AI code editor | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| GitHub Copilot (VS Code) | IDE extension | Basic, OAuth 2.0 | [clients/vscode/SETUP.md](clients/vscode/SETUP.md) |
+| Continue.dev | VS Code / JetBrains | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Cline | VS Code extension | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Amazon Q Developer | IDE / CLI | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| JetBrains AI Assistant | IDE plugin | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Zed | AI editor | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Ollama (local models) | Local runtime | Basic | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+
+---
+
+## What's New in v2.0
+
+- **154 tools** across 17 domain modules (up from 16 tools in v1.0)
+- **HRSD module** — HR cases, services, profiles, onboarding/offboarding workflows
+- **CSM module** — Customer cases, accounts, contacts, products, SLA tracking
+- **Security Operations & GRC** — SecOps incidents, vulnerabilities, risks, controls, threat intel
+- **Flow Designer** — List, inspect, trigger, and monitor flows and subflows
+- **OAuth 2.0** for all six AI clients
+- **Role-based tool packages** — 10 persona-specific packages
+- **Now Assist Agentic Playbooks** — latest release AI automation
+- **ATF Failure Insight** — latest release test failure diagnostics
+- **61 unit tests** covering all permission tiers, routing, and domain handlers
+- **Complete documentation** — 8 reference guides in `docs/`
+
+---
 
 ## Documentation
 
-- **[Installation Guide](docs/INSTALLATION.md)** - Complete setup instructions
-- **[OAuth Setup Guide](docs/SERVICENOW_OAUTH_SETUP.md)** - ServiceNow OAuth 2.0 configuration
-- **[Usage Examples](EXAMPLES.md)** - 16+ detailed examples and workflows
-- **[Security Policy](SECURITY.md)** - Security best practices
-- **Full Documentation**: https://habenani-p.github.io/servicenow-mcp/
+| Guide | Description |
+|-------|-------------|
+| [docs/TOOLS.md](docs/TOOLS.md) | Complete reference for all 150+ tools with parameters, return types, and permission requirements |
+| [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) | Step-by-step setup for all six AI clients, both Basic Auth and OAuth 2.0 |
+| [docs/TOOL_PACKAGES.md](docs/TOOL_PACKAGES.md) | Role-based package reference — which tools each persona package includes |
+| [docs/NOW_ASSIST.md](docs/NOW_ASSIST.md) | Now Assist and AI integration guide — NLQ, AI Search, Agentic Playbooks |
+| [docs/ATF.md](docs/ATF.md) | ATF testing guide — suites, test runs, ATF Failure Insight |
+| [docs/SCRIPTING.md](docs/SCRIPTING.md) | Scripting management — business rules, script includes, changesets |
+| [docs/REPORTING.md](docs/REPORTING.md) | Reporting and analytics — aggregate queries, Performance Analytics |
+| [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md) | Multi-instance configuration via `instances.json` or environment variables |
+| [EXAMPLES.md](EXAMPLES.md) | 100+ real-world examples with inputs, outputs, and advanced workflows |
 
-## Official ServiceNow Documentation References
+---
 
-This implementation follows official ServiceNow documentation:
+## Development
 
-- [Table API](https://docs.servicenow.com/bundle/washingtondc-api-reference/page/integrate/inbound-rest/concept/c_TableAPI.html)
-- [OAuth 2.0](https://docs.servicenow.com/bundle/washingtondc-platform-security/page/administer/security/concept/c_OAuthApplications.html)
-- [CMDB](https://docs.servicenow.com/bundle/washingtondc-servicenow-platform/page/product/configuration-management/concept/c_ITILConfigurationManagement.html)
-- [Discovery](https://docs.servicenow.com/bundle/washingtondc-it-operations-management/page/product/discovery/concept/c_ITOMDiscovery.html)
-- [Event Management](https://docs.servicenow.com/bundle/washingtondc-it-operations-management/page/product/event-management/concept/event-management.html)
+```bash
+# Install dependencies
+npm install
 
-## Security
+# Run in development mode (hot reload)
+npm run dev
 
-- Read-only by default
-- OAuth 2.0 support
-- Credential redaction in logs
-- Table access allowlisting
-- Input validation
+# Build
+npm run build
 
-See [SECURITY.md](SECURITY.md) for full details.
+# Run all tests
+npm test
+
+# Type check
+npm run type-check
+
+# Lint
+npm run lint
+```
+
+### Project Structure
+
+```
+src/
+  server.ts              — MCP server entry point
+  servicenow/
+    client.ts            — ServiceNow REST API client (Basic + OAuth)
+    types.ts             — Full TypeScript type definitions
+  tools/
+    index.ts             — Tool router & role-based package system
+    core.ts              — Core platform & CMDB (16 tools)
+    incident.ts          — Incident management (7 tools)
+    problem.ts           — Problem management (4 tools)
+    change.ts            — Change management (5 tools)
+    task.ts              — Task management (4 tools)
+    knowledge.ts         — Knowledge base (6 tools)
+    catalog.ts           — Service catalog & approvals (10 tools)
+    user.ts              — User & group management (8 tools)
+    reporting.ts         — Reporting & analytics (8 tools)
+    atf.ts               — ATF testing (9 tools)
+    now-assist.ts        — Now Assist / AI (10 tools)
+    script.ts            — Scripting management (16 tools)
+    agile.ts             — Agile / Scrum (9 tools)
+    hrsd.ts              — HR Service Delivery (12 tools)
+    csm.ts               — Customer Service Management (11 tools)
+    security.ts          — Security Operations & GRC (11 tools)
+    flow.ts              — Flow Designer & Process Automation (10 tools)
+  utils/
+    permissions.ts       — Four-tier permission gate functions
+    errors.ts            — Typed error classes
+tests/
+  tools/                 — Unit tests (61 passing)
+docs/                    — Reference documentation (8 guides)
+clients/                 — Per-client setup and config files
+  claude-desktop/
+  claude-code/
+  cursor/
+  vscode/
+  codex/
+  gemini/
+```
+
+---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+- Bug reports and feature requests: [open an issue](../../issues)
+- New tool domains, additional tests, or documentation improvements are especially appreciated
+- All PRs require `npm test` to pass
+
+---
+
+## Security
+
+If you discover a security vulnerability, please follow the responsible disclosure process in [SECURITY.md](SECURITY.md). Do not open a public issue.
+
+---
 
 ## License
 
-MIT License - see [LICENSE](LICENSE)
+[MIT](LICENSE) — free for personal and commercial use.
 
-## Support
+---
 
-- Issues: [GitHub Issues](https://github.com/habenani-p/servicenow-mcp/issues)
-- Documentation: https://habenani-p.github.io/servicenow-mcp/
+<div align="center">
 
-**Note**: This is an open-source community project, not an official ServiceNow product.
+If now-ai-kit saves you time, please consider starring the repository — it helps others discover the project.
+
+[![GitHub Stars](https://img.shields.io/github/stars/habenani-p/servicenow-mcp?style=social)](../../stargazers)
+
+</div>
