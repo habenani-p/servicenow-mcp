@@ -1,7 +1,7 @@
 {
-  "name": "servicenow-mcp",
+  "name": "now-ai-kit",
   "version": "2.0.0",
-  "description": "Model Context Protocol server for ServiceNow platform integration — 112 tools, Zurich release APIs",
+  "description": "The most advanced & comprehensive ServiceNow MCP server — 150+ tools across 17 modules, full Zurich API coverage, integrates with Claude, GPT-4o, Gemini, Cursor, VS Code, and Codex",
   "main": "dist/server.js",
   "type": "module",
   "engines": {
@@ -19,18 +19,38 @@
   },
   "keywords": [
     "servicenow",
+    "servicenow-mcp",
     "mcp",
     "model-context-protocol",
+    "now-ai-kit",
     "itsm",
     "itom",
+    "hrsd",
+    "csm",
+    "secops",
+    "grc",
     "cmdb",
     "now-assist",
     "atf",
+    "flow-designer",
     "zurich",
     "ai",
-    "llm"
+    "llm",
+    "claude",
+    "openai",
+    "gemini",
+    "typescript",
+    "automation"
   ],
-  "author": "",
+  "author": "habenani-p",
+  "homepage": "https://github.com/habenani-p/servicenow-mcp#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/habenani-p/servicenow-mcp.git"
+  },
+  "bugs": {
+    "url": "https://github.com/habenani-p/servicenow-mcp/issues"
+  },
   "license": "MIT",
   "dependencies": {
     "@modelcontextprotocol/sdk": "^0.5.0",

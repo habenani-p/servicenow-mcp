@@ -32,6 +32,14 @@ import { getNowAssistToolDefinitions, executeNowAssistToolCall } from './now-ass
 import { getScriptToolDefinitions, executeScriptToolCall } from './script.js';
 // Agile
 import { getAgileToolDefinitions, executeAgileToolCall } from './agile.js';
+// HR Service Delivery
+import { getHrsdToolDefinitions, executeHrsdToolCall } from './hrsd.js';
+// Customer Service Management
+import { getCsmToolDefinitions, executeCsmToolCall } from './csm.js';
+// Security Operations & GRC
+import { getSecurityToolDefinitions, executeSecurityToolCall } from './security.js';
+// Flow Designer & Process Automation
+import { getFlowToolDefinitions, executeFlowToolCall } from './flow.js';
 
 // ─── Package Definitions ──────────────────────────────────────────────────────
 
@@ -119,6 +127,10 @@ const ALL_TOOLS = [
   ...getNowAssistToolDefinitions(),
   ...getScriptToolDefinitions(),
   ...getAgileToolDefinitions(),
+  ...getHrsdToolDefinitions(),
+  ...getCsmToolDefinitions(),
+  ...getSecurityToolDefinitions(),
+  ...getFlowToolDefinitions(),
 ];
 
 // ─── Public API ───────────────────────────────────────────────────────────────
@@ -160,6 +172,10 @@ export async function executeTool(
     () => executeNowAssistToolCall(client, name, args),
     () => executeScriptToolCall(client, name, args),
     () => executeAgileToolCall(client, name, args),
+    () => executeHrsdToolCall(client, name, args),
+    () => executeCsmToolCall(client, name, args),
+    () => executeSecurityToolCall(client, name, args),
+    () => executeFlowToolCall(client, name, args),
   ];
 
   for (const handler of handlers) {

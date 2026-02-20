@@ -1138,9 +1138,1774 @@ The client includes automatic retry with exponential backoff, but be mindful of:
 
 ---
 
+## HR Service Delivery (HRSD) Examples
+
+### Example 20: Open an Onboarding Case
+
+**Use Case:** Create an HR onboarding case for a new hire.
+
+**Tool Call:**
+```json
+{
+  "tool": "create_hr_case",
+  "arguments": {
+    "short_description": "Onboarding for Jane Smith - Engineering",
+    "hr_service": "Onboarding",
+    "subject_person": "jane.smith",
+    "description": "New employee starting 2025-04-01. Requires laptop provisioning, badge access, and system accounts.",
+    "priority": 2
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "sys_id": "hrcase001abc",
+  "number": "HRCS0001001",
+  "state": "open",
+  "summary": "Created HR case HRCS0001001"
+}
+```
+
+---
+
+### Example 21: Get HR Case Details
+
+**Use Case:** Look up the status of an HR case by number.
+
+**Tool Call:**
+```json
+{
+  "tool": "get_hr_case",
+  "arguments": {
+    "number_or_sysid": "HRCS0001001"
+  }
+}
+```
+
+---
+
+### Example 22: List Open HR Cases for an Employee
+
+**Use Case:** Find all open HR cases for a specific subject person.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_hr_cases",
+  "arguments": {
+    "state": "open",
+    "subject_person": "jane.smith",
+    "limit": 10
+  }
+}
+```
+
+---
+
+### Example 23: List Available HR Services
+
+**Use Case:** Find all active HR services (Onboarding, Offboarding, Benefits, Payroll, etc.).
+
+**Tool Call:**
+```json
+{
+  "tool": "list_hr_services",
+  "arguments": {
+    "active": true,
+    "limit": 50
+  }
+}
+```
+
+---
+
+### Example 24: Get Employee HR Profile
+
+**Use Case:** Retrieve employment details, department, and manager for an employee.
+
+**Tool Call:**
+```json
+{
+  "tool": "get_hr_profile",
+  "arguments": {
+    "user_identifier": "john.doe"
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "user": "John Doe",
+  "department": "Engineering",
+  "manager": "Alice Manager",
+  "employment_type": "Full-Time",
+  "hire_date": "2023-01-15"
+}
+```
+
+---
+
+### Example 25: Create HR Task on a Case
+
+**Use Case:** Add an IT provisioning task to an existing HR onboarding case.
+
+**Tool Call:**
+```json
+{
+  "tool": "create_hr_task",
+  "arguments": {
+    "hr_case_sysid": "hrcase001abc",
+    "short_description": "Provision laptop and accounts for new hire",
+    "assigned_to": "it.provisioning",
+    "due_date": "2025-04-01T09:00:00Z"
+  }
+}
+```
+
+---
+
+### Example 26: Close an HR Case
+
+**Use Case:** Close a resolved onboarding case with resolution notes.
+
+**Tool Call:**
+```json
+{
+  "tool": "close_hr_case",
+  "arguments": {
+    "sys_id": "hrcase001abc",
+    "close_notes": "All onboarding tasks completed. Employee fully set up.",
+    "close_code": "Resolved"
+  }
+}
+```
+
+---
+
+## Customer Service Management (CSM) Examples
+
+### Example 27: Create a Customer Service Case
+
+**Use Case:** Log a new case for a customer reporting a product defect.
+
+**Tool Call:**
+```json
+{
+  "tool": "create_csm_case",
+  "arguments": {
+    "short_description": "Payment gateway returning 500 errors",
+    "account": "Acme Corp",
+    "contact": "Bob Johnson",
+    "category": "Technical",
+    "subcategory": "API Integration",
+    "priority": 1,
+    "description": "Customer reports consistent 500 errors from payment gateway API since 2025-03-15 14:00 UTC."
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "number": "CS0001234",
+  "state": "open",
+  "priority": "1 - Critical",
+  "summary": "Created CSM case CS0001234"
+}
+```
+
+---
+
+### Example 28: Get Case Details
+
+**Tool Call:**
+```json
+{
+  "tool": "get_csm_case",
+  "arguments": {
+    "number_or_sysid": "CS0001234"
+  }
+}
+```
+
+---
+
+### Example 29: List Cases for an Account
+
+**Use Case:** Show all open cases for Acme Corp.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_csm_cases",
+  "arguments": {
+    "account": "Acme Corp",
+    "state": "open",
+    "limit": 20
+  }
+}
+```
+
+---
+
+### Example 30: Get Account Details
+
+**Use Case:** Retrieve account information including primary contact and industry.
+
+**Tool Call:**
+```json
+{
+  "tool": "get_csm_account",
+  "arguments": {
+    "name_or_sysid": "Acme Corp"
+  }
+}
+```
+
+---
+
+### Example 31: List Contacts for an Account
+
+**Tool Call:**
+```json
+{
+  "tool": "list_csm_contacts",
+  "arguments": {
+    "account_sysid": "acmeacct001abc",
+    "limit": 25
+  }
+}
+```
+
+---
+
+### Example 32: Check Case SLA Status
+
+**Use Case:** Verify if a critical case is approaching SLA breach.
+
+**Tool Call:**
+```json
+{
+  "tool": "get_csm_case_sla",
+  "arguments": {
+    "case_sysid": "cs001abc"
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "sla_name": "P1 Response SLA",
+  "breached": false,
+  "time_remaining": "2h 15m",
+  "percentage_elapsed": 72
+}
+```
+
+---
+
+### Example 33: Close a Customer Case
+
+**Tool Call:**
+```json
+{
+  "tool": "close_csm_case",
+  "arguments": {
+    "sys_id": "cs001abc",
+    "resolution_code": "Solved by Engineering",
+    "resolution_notes": "Root cause identified as misconfigured TLS certificate. Renewed and deployed to production at 18:42 UTC."
+  }
+}
+```
+
+---
+
+## Security Operations Examples
+
+### Example 34: Create a Security Incident
+
+**Use Case:** Log a ransomware detection event from your SIEM.
+
+**Tool Call:**
+```json
+{
+  "tool": "create_security_incident",
+  "arguments": {
+    "short_description": "Ransomware variant detected on PROD-DB-01",
+    "category": "Malware",
+    "subcategory": "Ransomware",
+    "severity": 1,
+    "description": "EDR detected WannaCry variant attempting lateral movement. Host isolated at 09:32 UTC.",
+    "assignment_group": "SOC Tier 2"
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "number": "SIR0001001",
+  "state": "open",
+  "severity": "1 - High",
+  "summary": "Created security incident SIR0001001"
+}
+```
+
+---
+
+### Example 35: List High-Severity Security Incidents
+
+**Tool Call:**
+```json
+{
+  "tool": "list_security_incidents",
+  "arguments": {
+    "severity": 1,
+    "state": "open",
+    "limit": 25
+  }
+}
+```
+
+---
+
+### Example 36: List Critical Vulnerabilities on Production Servers
+
+**Use Case:** Find all critical CVSS-scored vulnerabilities on CIs tagged as production.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_vulnerabilities",
+  "arguments": {
+    "state": "open",
+    "severity": "critical",
+    "limit": 50
+  }
+}
+```
+
+---
+
+### Example 37: Get Vulnerability Details
+
+**Tool Call:**
+```json
+{
+  "tool": "get_vulnerability",
+  "arguments": {
+    "number_or_sysid": "VIT0001234"
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "number": "VIT0001234",
+  "vulnerability": "CVE-2024-1234",
+  "cvss_score": 9.8,
+  "severity": "Critical",
+  "affected_ci": "PROD-WEB-01",
+  "state": "open",
+  "remediation_date": "2025-04-30"
+}
+```
+
+---
+
+### Example 38: Accept Risk on a Vulnerability
+
+**Use Case:** Mark a vulnerability as risk-accepted with business justification.
+
+**Tool Call:**
+```json
+{
+  "tool": "update_vulnerability",
+  "arguments": {
+    "sys_id": "vul001abc",
+    "fields": {
+      "state": "risk_accepted",
+      "risk_acceptance_notes": "Compensating control in place via WAF rule. Reviewed by CISO 2025-03-20."
+    }
+  }
+}
+```
+
+---
+
+### Example 39: List GRC Risks in Draft State
+
+**Tool Call:**
+```json
+{
+  "tool": "list_grc_risks",
+  "arguments": {
+    "state": "draft",
+    "category": "Data Privacy",
+    "limit": 20
+  }
+}
+```
+
+---
+
+### Example 40: Get GRC Risk Details
+
+**Tool Call:**
+```json
+{
+  "tool": "get_grc_risk",
+  "arguments": {
+    "number_or_sysid": "RSK0001001"
+  }
+}
+```
+
+---
+
+### Example 41: List GRC Controls for a Risk
+
+**Tool Call:**
+```json
+{
+  "tool": "list_grc_controls",
+  "arguments": {
+    "risk_sysid": "risk001abc",
+    "state": "non_compliant",
+    "limit": 25
+  }
+}
+```
+
+---
+
+### Example 42: Search Threat Intelligence
+
+**Use Case:** Check if a suspicious IP address is in the threat intelligence database.
+
+**Tool Call:**
+```json
+{
+  "tool": "get_threat_intelligence",
+  "arguments": {
+    "query": "185.220.101.47",
+    "type": "ip_address"
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "count": 1,
+  "records": [
+    {
+      "value": "185.220.101.47",
+      "type": "ip_address",
+      "confidence": 95,
+      "threat_actor": "APT41",
+      "campaign": "Operation ShadowNet",
+      "last_seen": "2025-03-18"
+    }
+  ]
+}
+```
+
+---
+
+## Flow Designer Examples
+
+### Example 43: List All Active Flows
+
+**Tool Call:**
+```json
+{
+  "tool": "list_flows",
+  "arguments": {
+    "active": true,
+    "limit": 50
+  }
+}
+```
+
+---
+
+### Example 44: Get Flow Details
+
+**Use Case:** Inspect the actions and trigger of a specific flow before triggering it.
+
+**Tool Call:**
+```json
+{
+  "tool": "get_flow",
+  "arguments": {
+    "name_or_sysid": "Employee Offboarding"
+  }
+}
+```
+
+---
+
+### Example 45: Trigger a Flow with Inputs
+
+**Use Case:** Programmatically trigger the Employee Offboarding flow.
+
+**Tool Call:**
+```json
+{
+  "tool": "trigger_flow",
+  "arguments": {
+    "flow_sys_id": "flow001abc",
+    "inputs": {
+      "employee_sys_id": "user001abc",
+      "effective_date": "2025-04-01",
+      "termination_type": "voluntary"
+    }
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "sys_id": "exec001abc",
+  "status": "running",
+  "summary": "Triggered flow flow001abc"
+}
+```
+
+---
+
+### Example 46: Check Flow Execution Status
+
+**Tool Call:**
+```json
+{
+  "tool": "get_flow_execution",
+  "arguments": {
+    "execution_sysid": "exec001abc"
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "sys_id": "exec001abc",
+  "status": "complete",
+  "started": "2025-03-20T10:00:00Z",
+  "ended": "2025-03-20T10:02:34Z",
+  "error": null
+}
+```
+
+---
+
+### Example 47: List Recent Executions of a Flow
+
+**Use Case:** Review the last 10 runs of a scheduled flow to check for errors.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_flow_executions",
+  "arguments": {
+    "flow_sys_id": "flow001abc",
+    "status": "error",
+    "limit": 10
+  }
+}
+```
+
+---
+
+### Example 48: List Available Subflows
+
+**Tool Call:**
+```json
+{
+  "tool": "list_subflows",
+  "arguments": {
+    "query": "notification",
+    "active": true,
+    "limit": 25
+  }
+}
+```
+
+---
+
+### Example 49: List Process Automation Playbooks
+
+**Use Case:** Show all active Process Automation Designer playbooks.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_process_automations",
+  "arguments": {
+    "active": true,
+    "limit": 50
+  }
+}
+```
+
+---
+
+## Advanced Multi-Step Workflow Examples
+
+### Example 50: Incident Triage Workflow
+
+**Use Case:** Triage a reported outage — query CMDB, create incident, assign, and add work note.
+
+**Step 1 — Find the affected CI:**
+```json
+{ "tool": "search_cmdb_ci", "arguments": { "query": "name=PROD-WEB-01" } }
+```
+
+**Step 2 — Create the incident:**
+```json
+{
+  "tool": "create_incident",
+  "arguments": {
+    "short_description": "PROD-WEB-01 unresponsive — HTTP 503",
+    "urgency": 1,
+    "impact": 1,
+    "category": "Infrastructure",
+    "assignment_group": "Web Operations"
+  }
+}
+```
+
+**Step 3 — Add initial work note:**
+```json
+{
+  "tool": "add_work_note",
+  "arguments": {
+    "table": "incident",
+    "sys_id": "inc001abc",
+    "note": "CMDB: PROD-WEB-01 (Linux, Apache 2.4) hosts the customer portal. CI owner: web.ops team. Last discovery: 2025-03-19."
+  }
+}
+```
+
+---
+
+### Example 51: Change Request with CAB Approval
+
+**Step 1 — Create change request:**
+```json
+{
+  "tool": "create_change_request",
+  "arguments": {
+    "short_description": "Upgrade PostgreSQL from 14 to 16 on PROD-DB cluster",
+    "category": "Database",
+    "risk": "moderate",
+    "assignment_group": "DBA Team"
+  }
+}
+```
+
+**Step 2 — Submit for CAB approval:**
+```json
+{ "tool": "submit_change_for_approval", "arguments": { "sys_id": "chg001abc" } }
+```
+
+**Step 3 — Check approval status:**
+```json
+{ "tool": "get_my_approvals", "arguments": {} }
+```
+
+---
+
+### Example 52: End-to-End Security Incident Response
+
+**Step 1 — Create SecOps incident:**
+```json
+{
+  "tool": "create_security_incident",
+  "arguments": {
+    "short_description": "Suspected credential stuffing on login portal",
+    "category": "Unauthorized Access",
+    "severity": 2,
+    "assignment_group": "SOC Tier 1"
+  }
+}
+```
+
+**Step 2 — Check threat intel on source IPs:**
+```json
+{ "tool": "get_threat_intelligence", "arguments": { "query": "91.108.4.0/22", "type": "ip_address" } }
+```
+
+**Step 3 — Find associated vulnerabilities:**
+```json
+{ "tool": "list_vulnerabilities", "arguments": { "severity": "high", "state": "open", "limit": 10 } }
+```
+
+**Step 4 — Update incident with findings:**
+```json
+{
+  "tool": "update_security_incident",
+  "arguments": {
+    "sys_id": "sir001abc",
+    "fields": {
+      "state": "analysis",
+      "work_notes": "Source IPs match known Tor exit nodes. Correlating with open CVE-2024-5678 on auth service."
+    }
+  }
+}
+```
+
+---
+
+### Example 53: HR Onboarding End-to-End
+
+**Step 1 — Open HR case:**
+```json
+{
+  "tool": "create_hr_case",
+  "arguments": {
+    "short_description": "Onboarding — Alex Turner, Software Engineer",
+    "hr_service": "Onboarding",
+    "subject_person": "alex.turner"
+  }
+}
+```
+
+**Step 2 — Add provisioning task:**
+```json
+{
+  "tool": "create_hr_task",
+  "arguments": {
+    "hr_case_sysid": "hrcase002abc",
+    "short_description": "Provision MacBook Pro and GitHub access",
+    "assigned_to": "it.provisioning",
+    "due_date": "2025-04-01T09:00:00Z"
+  }
+}
+```
+
+**Step 3 — Trigger onboarding flow:**
+```json
+{
+  "tool": "trigger_flow",
+  "arguments": {
+    "flow_sys_id": "onboarding_flow_sysid",
+    "inputs": { "employee_sys_id": "alex.turner.sysid", "start_date": "2025-04-01" }
+  }
+}
+```
+
+---
+
+### Example 54: ATF Regression Test Run
+
+**Step 1 — List test suites:**
+```json
+{ "tool": "list_atf_suites", "arguments": { "active": true, "limit": 10 } }
+```
+
+**Step 2 — Run the regression suite:**
+```json
+{ "tool": "run_atf_suite", "arguments": { "suite_sys_id": "suite001abc" } }
+```
+
+**Step 3 — Check suite results:**
+```json
+{ "tool": "get_atf_suite_result", "arguments": { "result_sys_id": "result001abc" } }
+```
+
+**Step 4 — Get Failure Insight for a failed test:**
+```json
+{ "tool": "get_atf_failure_insight", "arguments": { "test_result_sys_id": "testresult001abc" } }
+```
+
+---
+
+### Example 55: Reporting — Incident Trend Analysis
+
+**Use Case:** Analyse incident volume by category over the last quarter.
+
+**Tool Call:**
+```json
+{
+  "tool": "trend_query",
+  "arguments": {
+    "table": "incident",
+    "field": "opened_at",
+    "period": "quarter",
+    "group_by": "category"
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "period": "2025-Q1",
+  "data": [
+    { "category": "Network", "count": 142 },
+    { "category": "Hardware", "count": 87 },
+    { "category": "Software", "count": 201 },
+    { "category": "Security", "count": 34 }
+  ]
+}
+```
+
+---
+
+### Example 56: Knowledge Base — Find and Publish Article
+
+**Step 1 — Search for existing articles:**
+```json
+{ "tool": "search_knowledge", "arguments": { "query": "VPN setup guide", "limit": 5 } }
+```
+
+**Step 2 — Create a new article if none exists:**
+```json
+{
+  "tool": "create_knowledge_article",
+  "arguments": {
+    "short_description": "How to set up the corporate VPN on macOS",
+    "knowledge_base": "IT Self-Service",
+    "category": "Networking",
+    "text": "# VPN Setup Guide\n\n1. Download the VPN client...\n2. Enter server address...\n3. Authenticate with your corporate credentials."
+  }
+}
+```
+
+**Step 3 — Publish the article:**
+```json
+{ "tool": "publish_knowledge_article", "arguments": { "sys_id": "kb001abc" } }
+```
+
+---
+
+### Example 57: Agile Sprint Planning
+
+**Step 1 — Create an epic:**
+```json
+{
+  "tool": "create_epic",
+  "arguments": {
+    "short_description": "ServiceNow MCP Integration Phase 2",
+    "description": "Extend MCP integration to cover HRSD and CSM modules",
+    "release": "Q2 2025"
+  }
+}
+```
+
+**Step 2 — Create stories under the epic:**
+```json
+{
+  "tool": "create_story",
+  "arguments": {
+    "short_description": "As an HR admin, I can create HR cases via AI assistant",
+    "epic_sys_id": "epic001abc",
+    "story_points": 5,
+    "assigned_to": "developer.one"
+  }
+}
+```
+
+**Step 3 — List stories in the epic:**
+```json
+{ "tool": "list_stories", "arguments": { "epic_sys_id": "epic001abc", "limit": 20 } }
+```
+
+---
+
+### Example 58: Now Assist — AI-Powered Incident Resolution
+
+**Step 1 — Generate a summary of a complex incident:**
+```json
+{ "tool": "generate_summary", "arguments": { "table": "incident", "sys_id": "inc001abc" } }
+```
+
+**Step 2 — Get AI-suggested resolution:**
+```json
+{ "tool": "suggest_resolution", "arguments": { "incident_sys_id": "inc001abc" } }
+```
+
+**Step 3 — Auto-categorise a new incident:**
+```json
+{
+  "tool": "categorize_incident",
+  "arguments": {
+    "short_description": "Outlook not opening after Windows update KB5034441",
+    "description": "Multiple users on Windows 11 reporting Outlook crashes immediately after launch following the March 2025 cumulative update."
+  }
+}
+```
+
+**Expected Result:**
+```json
+{
+  "category": "Software",
+  "subcategory": "Email Client",
+  "suggested_assignment_group": "Desktop Support",
+  "confidence": 0.94
+}
+```
+
+---
+
+### Example 59: Natural Language Search
+
+**Use Case:** Query ServiceNow using plain English without knowing field names.
+
+**Tool Call:**
+```json
+{
+  "tool": "natural_language_search",
+  "arguments": {
+    "query": "Show me all critical incidents opened this week that are still unassigned",
+    "limit": 20
+  }
+}
+```
+
+---
+
+### Example 60: CMDB Dependency Map for a Service
+
+**Use Case:** Understand the full dependency chain for a business service before a change window.
+
+**Step 1 — Find the service CI:**
+```json
+{ "tool": "search_cmdb_ci", "arguments": { "query": "name=Customer Portal" } }
+```
+
+**Step 2 — Get its relationships:**
+```json
+{
+  "tool": "list_relationships",
+  "arguments": {
+    "ci_sys_id": "ci001abc",
+    "relationship_type": "Depends on"
+  }
+}
+```
+
+**Step 3 — Get service mapping summary:**
+```json
+{ "tool": "service_mapping_summary", "arguments": { "service_sys_id": "ci001abc" } }
+```
+
+---
+
+### Example 61: Scripting — Create a Business Rule
+
+**Use Case:** Add a business rule to auto-assign incidents based on category.
+
+**Tool Call:**
+```json
+{
+  "tool": "create_business_rule",
+  "arguments": {
+    "name": "Auto-assign Network incidents",
+    "table": "incident",
+    "when": "before",
+    "insert": true,
+    "condition": "current.category == 'network'",
+    "script": "current.assignment_group = gs.getGroupByName('Network Operations');"
+  }
+}
+```
+
+---
+
+### Example 62: Multi-Instance — Switch Context
+
+**Use Case:** Query production data without leaving your AI session.
+
+Configure `instances.json` with both `dev` and `production` entries (see [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md)), then ask:
+
+```
+Switch to the production instance and show me the top 5 open P1 incidents.
+```
+
+---
+
+### Example 63: Service Catalog — Order an Item
+
+**Use Case:** Submit a catalog request for a new software license.
+
+**Step 1 — Browse catalog:**
+```json
+{ "tool": "list_catalog_items", "arguments": { "category": "Software", "limit": 20 } }
+```
+
+**Step 2 — Get item details and variables:**
+```json
+{ "tool": "get_catalog_item", "arguments": { "item_sys_id": "catalog001abc" } }
+```
+
+**Step 3 — Place the order:**
+```json
+{
+  "tool": "order_catalog_item",
+  "arguments": {
+    "item_sys_id": "catalog001abc",
+    "quantity": 1,
+    "variables": {
+      "software_name": "JetBrains IntelliJ IDEA",
+      "justification": "Required for Java microservice development"
+    }
+  }
+}
+```
+
+---
+
+### Example 64: User Management — Bulk Group Update
+
+**Use Case:** Add multiple engineers to the On-Call rotation group.
+
+**Step 1 — Get the group sys_id:**
+```json
+{ "tool": "get_group", "arguments": { "group_identifier": "On-Call Rotation" } }
+```
+
+**Step 2 — Add each user:**
+```json
+{ "tool": "add_user_to_group", "arguments": { "user_identifier": "alice.smith", "group_identifier": "group001abc" } }
+```
+```json
+{ "tool": "add_user_to_group", "arguments": { "user_identifier": "bob.jones", "group_identifier": "group001abc" } }
+```
+
+---
+
+### Example 65: Performance Analytics Dashboard Query
+
+**Use Case:** Pull KPIs for the monthly IT operations review.
+
+**Tool Call:**
+```json
+{
+  "tool": "run_aggregate_query",
+  "arguments": {
+    "table": "incident",
+    "aggregate": "COUNT",
+    "group_by": ["state", "priority"],
+    "query": "opened_atONLast 30 days@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()"
+  }
+}
+```
+
+---
+
+### Example 66: Discovery — Check MID Server Health
+
+**Use Case:** Verify all MID servers are up before running a discovery schedule.
+
+**Tool Call:**
+```json
+{ "tool": "list_mid_servers", "arguments": { "active_only": true } }
+```
+
+**Expected Result:**
+```json
+{
+  "count": 3,
+  "records": [
+    { "name": "MID-LONDON-01", "status": "Up", "version": "Tokyo Patch 8" },
+    { "name": "MID-NYC-01", "status": "Up", "version": "Tokyo Patch 8" },
+    { "name": "MID-SYDNEY-01", "status": "Down", "last_seen": "2025-03-19T06:00:00Z" }
+  ]
+}
+```
+
+---
+
+### Example 67: Virtual Agent — List Topics
+
+**Use Case:** Audit active Virtual Agent conversation topics.
+
+**Tool Call:**
+```json
+{ "tool": "get_virtual_agent_topics", "arguments": { "active": true, "limit": 30 } }
+```
+
+---
+
+### Example 68: Agentic Playbook — Trigger AI Workflow
+
+**Use Case:** Launch a Now Assist Agentic Playbook for automated incident remediation.
+
+**Tool Call:**
+```json
+{
+  "tool": "trigger_agentic_playbook",
+  "arguments": {
+    "playbook_name": "Incident Auto-Remediation",
+    "context": {
+      "incident_sys_id": "inc001abc",
+      "severity": "high"
+    }
+  }
+}
+```
+
+---
+
+### Example 69: AI Search — Semantic Knowledge Query
+
+**Use Case:** Use the AI Search API to find contextually relevant KB articles.
+
+**Tool Call:**
+```json
+{
+  "tool": "ai_search",
+  "arguments": {
+    "query": "laptop keeps overheating and shutting down unexpectedly",
+    "limit": 5
+  }
+}
+```
+
+---
+
+### Example 70: Changeset Workflow
+
+**Use Case:** Commit and publish a development changeset to the next environment.
+
+**Step 1 — List open changesets:**
+```json
+{ "tool": "list_changesets", "arguments": { "state": "in_progress" } }
+```
+
+**Step 2 — Commit the changeset:**
+```json
+{ "tool": "commit_changeset", "arguments": { "changeset_sys_id": "cs001abc" } }
+```
+
+**Step 3 — Publish it:**
+```json
+{ "tool": "publish_changeset", "arguments": { "changeset_sys_id": "cs001abc" } }
+```
+
+---
+
+## Tips and Best Practices
+
+### 1. Start Read-Only
+
+Keep `WRITE_ENABLED=false` until you understand what each tool does. All read operations are always available.
+
+### 2. Use Role-Based Packages in Production
+
+Set `MCP_TOOL_PACKAGE` to limit the tools exposed to what each persona actually needs. This reduces the attack surface and keeps responses focused.
+
+```env
+MCP_TOOL_PACKAGE=service_desk   # For L1/L2 agents
+MCP_TOOL_PACKAGE=itom_engineer  # For infrastructure teams
+MCP_TOOL_PACKAGE=ai_developer   # For Now Assist integrations
+```
+
+### 3. Leverage Natural Language for Complex Queries
+
+Instead of constructing encoded queries manually, use `natural_language_search` to let the AI translate your intent:
+
+```
+Show me all change requests opened last week that are pending CAB approval for the London data centre.
+```
+
+### 4. Chain Tools for Richer Context
+
+The most powerful use cases combine multiple tools. Always use `get_cmdb_ci` and `list_relationships` before a change, and `generate_summary` before an incident update.
+
+### 5. OAuth 2.0 for Production
+
+Always use OAuth 2.0 Client Credentials in production rather than Basic Auth. See [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) for setup instructions.
+
+### 6. Monitor Rate Limits
+
+The client includes automatic retry with exponential backoff, but be mindful of:
+- ServiceNow instance rate limits (configurable in `glide.rest.quota.enabled`)
+- Large result sets — use `limit` and `offset` for pagination
+- Frequent polling — cache read-only results where possible
+
+### 7. Use Encoded Queries for Precision
+
+For complex filters, pass an encoded ServiceNow query string directly:
+
+```json
+{"query": "assignment_group.name=Database^cmdb_ci.location.nameLIKEDC-EAST"}
+```
+
+---
+
 ## Next Steps
 
 - Review [SECURITY.md](SECURITY.md) for security best practices
 - Check [CONTRIBUTING.md](CONTRIBUTING.md) to extend functionality
-- See [README.md](README.md) for configuration options
+- See [docs/TOOLS.md](docs/TOOLS.md) for the full 150+ tool reference
+
+---
+
+## Additional Real-World Examples
+
+### Example 71: Get Schema for a Custom Table
+
+**Use Case:** Inspect the fields of a custom application table before querying it.
+
+**Tool Call:**
+```json
+{ "tool": "get_table_schema", "arguments": { "tableName": "x_acme_project_task" } }
+```
+
+---
+
+### Example 72: Paginate Large Result Sets
+
+**Use Case:** Retrieve all incidents from the last month in batches of 100.
+
+**Tool Call (page 1):**
+```json
+{
+  "tool": "query_records",
+  "arguments": {
+    "table": "incident",
+    "query": "opened_atONLast month@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()",
+    "limit": 100,
+    "offset": 0
+  }
+}
+```
+
+**Tool Call (page 2):**
+```json
+{
+  "tool": "query_records",
+  "arguments": {
+    "table": "incident",
+    "query": "opened_atONLast month@javascript:gs.beginningOfLast30Days()@javascript:gs.endOfLast30Days()",
+    "limit": 100,
+    "offset": 100
+  }
+}
+```
+
+---
+
+### Example 73: Get a Single Record by sys_id
+
+**Tool Call:**
+```json
+{
+  "tool": "get_record",
+  "arguments": {
+    "table": "change_request",
+    "sys_id": "chg001abc000000000000000000000001"
+  }
+}
+```
+
+---
+
+### Example 74: Get Incident by Number
+
+**Tool Call:**
+```json
+{
+  "tool": "get_incident",
+  "arguments": { "number_or_sysid": "INC0012345" }
+}
+```
+
+---
+
+### Example 75: Resolve an Incident
+
+**Tool Call:**
+```json
+{
+  "tool": "resolve_incident",
+  "arguments": {
+    "sys_id": "inc001abc",
+    "resolution_code": "Solved (Permanently)",
+    "resolution_notes": "Restarted the Apache service and identified the root cause as a memory leak in the request handler. Applied hotfix v1.2.1."
+  }
+}
+```
+
+---
+
+### Example 76: Add Customer-Visible Comment
+
+**Use Case:** Update the caller on progress without exposing internal notes.
+
+**Tool Call:**
+```json
+{
+  "tool": "add_comment",
+  "arguments": {
+    "table": "incident",
+    "sys_id": "inc001abc",
+    "comment": "We have identified the issue and our team is actively working on a fix. Expected resolution: 30 minutes."
+  }
+}
+```
+
+---
+
+### Example 77: Create a Problem Record
+
+**Use Case:** Open a problem from a recurring incident pattern.
+
+**Tool Call:**
+```json
+{
+  "tool": "create_problem",
+  "arguments": {
+    "short_description": "Recurring Apache crashes on PROD-WEB cluster",
+    "description": "7 incidents in the past 14 days all linked to Apache memory leak (INC001, INC002, INC005).",
+    "assignment_group": "Web Operations",
+    "urgency": 2
+  }
+}
+```
+
+---
+
+### Example 78: List My Pending Tasks
+
+**Use Case:** Daily task review for a technician starting their shift.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_my_tasks",
+  "arguments": { "limit": 20 }
+}
+```
+
+---
+
+### Example 79: Complete a Task
+
+**Tool Call:**
+```json
+{
+  "tool": "complete_task",
+  "arguments": {
+    "sys_id": "task001abc",
+    "close_notes": "Replaced faulty NIC on server PROD-DB-02. Verified network connectivity restored."
+  }
+}
+```
+
+---
+
+### Example 80: Create a New User
+
+**Use Case:** Provision a new service account via AI assistant.
+
+**Tool Call:**
+```json
+{
+  "tool": "create_user",
+  "arguments": {
+    "user_name": "svc_monitoring",
+    "first_name": "Monitoring",
+    "last_name": "Service Account",
+    "email": "svc.monitoring@company.com",
+    "active": true,
+    "roles": ["itil_admin"]
+  }
+}
+```
+
+---
+
+### Example 81: Search Knowledge Base
+
+**Tool Call:**
+```json
+{
+  "tool": "search_knowledge",
+  "arguments": {
+    "query": "how to reset Active Directory password",
+    "limit": 5
+  }
+}
+```
+
+---
+
+### Example 82: Get My Pending Approvals
+
+**Use Case:** Review all approvals awaiting action from the current user.
+
+**Tool Call:**
+```json
+{
+  "tool": "get_my_approvals",
+  "arguments": { "limit": 10 }
+}
+```
+
+---
+
+### Example 83: Approve a Request
+
+**Tool Call:**
+```json
+{
+  "tool": "approve_request",
+  "arguments": {
+    "approval_sys_id": "appr001abc",
+    "comments": "Approved. Change aligns with Q1 roadmap and has been tested in staging."
+  }
+}
+```
+
+---
+
+### Example 84: Reject a Catalog Request
+
+**Tool Call:**
+```json
+{
+  "tool": "reject_request",
+  "arguments": {
+    "approval_sys_id": "appr002abc",
+    "comments": "Rejected. Insufficient business justification provided. Please resubmit with cost-benefit analysis."
+  }
+}
+```
+
+---
+
+### Example 85: Check Active SLAs
+
+**Tool Call:**
+```json
+{
+  "tool": "list_active_slas",
+  "arguments": {
+    "table": "incident",
+    "breached": false,
+    "limit": 25
+  }
+}
+```
+
+---
+
+### Example 86: Get SLA Details for a Ticket
+
+**Tool Call:**
+```json
+{
+  "tool": "get_sla_details",
+  "arguments": { "task_sys_id": "inc001abc" }
+}
+```
+
+---
+
+### Example 87: List ITOM Discovery Schedules
+
+**Use Case:** Check which discovery schedules are running and their last status.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_discovery_schedules",
+  "arguments": { "active_only": true }
+}
+```
+
+---
+
+### Example 88: List Active Infrastructure Events
+
+**Use Case:** Monitor real-time infrastructure events for anomalies.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_active_events",
+  "arguments": {
+    "query": "severity=1",
+    "limit": 20
+  }
+}
+```
+
+---
+
+### Example 89: Get CMDB Health Dashboard
+
+**Use Case:** Weekly CMDB data quality review meeting.
+
+**Tool Call:**
+```json
+{ "tool": "cmdb_health_dashboard", "arguments": {} }
+```
+
+**Expected Result:**
+```json
+{
+  "total_cis": 12847,
+  "stale_cis": 234,
+  "duplicate_cis": 18,
+  "orphaned_relationships": 91,
+  "health_score": 97.1
+}
+```
+
+---
+
+### Example 90: Get Scheduled Reports List
+
+**Tool Call:**
+```json
+{
+  "tool": "list_scheduled_jobs",
+  "arguments": { "active": true, "limit": 20 }
+}
+```
+
+---
+
+### Example 91: Run a Specific ATF Test
+
+**Use Case:** Run a single ATF test in isolation after a code change.
+
+**Tool Call:**
+```json
+{
+  "tool": "run_atf_test",
+  "arguments": { "test_sys_id": "test001abc" }
+}
+```
+
+---
+
+### Example 92: Get ATF Test Results
+
+**Tool Call:**
+```json
+{
+  "tool": "list_atf_test_results",
+  "arguments": {
+    "suite_result_sys_id": "suiteresult001abc",
+    "status": "failed"
+  }
+}
+```
+
+---
+
+### Example 93: Predictive Intelligence — Get Models
+
+**Use Case:** List available Predictive Intelligence models for categorisation and routing.
+
+**Tool Call:**
+```json
+{ "tool": "get_pi_models", "arguments": { "active": true } }
+```
+
+---
+
+### Example 94: Generate Work Notes Summary
+
+**Use Case:** Before escalating an incident, generate a concise summary of all work notes.
+
+**Tool Call:**
+```json
+{
+  "tool": "generate_work_notes",
+  "arguments": {
+    "table": "incident",
+    "sys_id": "inc001abc"
+  }
+}
+```
+
+---
+
+### Example 95: List Script Includes
+
+**Use Case:** Review existing script includes before creating a new utility function.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_script_includes",
+  "arguments": {
+    "query": "IncidentUtils",
+    "limit": 10
+  }
+}
+```
+
+---
+
+### Example 96: Get a Business Rule
+
+**Tool Call:**
+```json
+{
+  "tool": "get_business_rule",
+  "arguments": { "name_or_sysid": "Auto-assign Network incidents" }
+}
+```
+
+---
+
+### Example 97: Update a Story's Status
+
+**Use Case:** Move an Agile story to "In Progress" when work begins.
+
+**Tool Call:**
+```json
+{
+  "tool": "update_story",
+  "arguments": {
+    "sys_id": "story001abc",
+    "fields": { "state": "2", "assigned_to": "developer.one" }
+  }
+}
+```
+
+---
+
+### Example 98: List Epics in a Release
+
+**Tool Call:**
+```json
+{
+  "tool": "list_epics",
+  "arguments": {
+    "release": "Q2 2025",
+    "limit": 20
+  }
+}
+```
+
+---
+
+### Example 99: Get MS Copilot Topics
+
+**Use Case:** Review topics configured for Microsoft Copilot integration.
+
+**Tool Call:**
+```json
+{ "tool": "get_ms_copilot_topics", "arguments": { "active": true } }
+```
+
+---
+
+### Example 100: NLQ Query — Natural Language to ServiceNow Query
+
+**Use Case:** Convert a business question into a ServiceNow query automatically.
+
+**Tool Call:**
+```json
+{
+  "tool": "nlq_query",
+  "arguments": {
+    "question": "How many P2 incidents were resolved within SLA last quarter by the Network team?",
+    "table": "incident"
+  }
+}
+```
+
+---
+
+### Example 101: Export Report Data
+
+**Use Case:** Pull raw data from a saved report for external analysis.
+
+**Tool Call:**
+```json
+{
+  "tool": "export_report_data",
+  "arguments": {
+    "report_sys_id": "report001abc",
+    "format": "json"
+  }
+}
+```
+
+---
+
+### Example 102: Get System Log Entries
+
+**Use Case:** Diagnose a platform issue by querying recent system log entries.
+
+**Tool Call:**
+```json
+{
+  "tool": "get_sys_log",
+  "arguments": {
+    "level": "error",
+    "limit": 50,
+    "query": "sourceCONTAINSBusinessRule"
+  }
+}
+```
+
+---
+
+### Example 103: Update a Change Request
+
+**Tool Call:**
+```json
+{
+  "tool": "update_change_request",
+  "arguments": {
+    "sys_id": "chg001abc",
+    "fields": {
+      "risk": "low",
+      "justification": "Low-risk update — only configuration file change, fully reversible within 5 minutes."
+    }
+  }
+}
+```
+
+---
+
+### Example 104: Close a Change Request
+
+**Tool Call:**
+```json
+{
+  "tool": "close_change_request",
+  "arguments": {
+    "sys_id": "chg001abc",
+    "close_code": "successful",
+    "close_notes": "Change implemented successfully during maintenance window. All validation tests passed."
+  }
+}
+```
+
+---
+
+### Example 105: List Client Scripts
+
+**Use Case:** Audit client-side scripts on the incident form before a platform upgrade.
+
+**Tool Call:**
+```json
+{
+  "tool": "list_client_scripts",
+  "arguments": {
+    "table": "incident",
+    "active": true,
+    "limit": 20
+  }
+}
+```
 

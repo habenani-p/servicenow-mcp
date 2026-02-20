@@ -1,131 +1,211 @@
-# ServiceNow MCP Server
+<div align="center">
 
-A production-ready **Model Context Protocol (MCP)** server for the ServiceNow platform, built for the **Zurich release (2025)**. Provides **112 tools** across 13 domains — enabling AI assistants to interact with ServiceNow instances through a standardized, secure interface.
+<img src="docs/assets/banner.svg" alt="now-ai-kit — The Most Advanced & Comprehensive ServiceNow MCP Server" width="100%"/>
 
-> Supports Claude Code, Claude Desktop, OpenAI Codex, Google Gemini/Vertex AI, Cursor, and VS Code.
+<br/>
+
+[![npm version](https://img.shields.io/npm/v/now-ai-kit?style=flat-square&color=0ea5e9&label=npm)](https://www.npmjs.com/package/now-ai-kit)
+[![npm downloads](https://img.shields.io/npm/dm/now-ai-kit?style=flat-square&color=6366f1&label=downloads)](https://www.npmjs.com/package/now-ai-kit)
+[![Tests](https://img.shields.io/badge/tests-61%20passing-22c55e?style=flat-square)](tests/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b?style=flat-square)](LICENSE)
+[![ServiceNow](https://img.shields.io/badge/ServiceNow-Zurich%202025-00c7b4?style=flat-square)](https://developer.servicenow.com)
+[![MCP](https://img.shields.io/badge/MCP-Model%20Context%20Protocol-8b5cf6?style=flat-square)](https://modelcontextprotocol.io)
+
+<br/>
+
+**now-ai-kit** is the most advanced, comprehensive, and thoroughly tested ServiceNow MCP server available.
+It provides complete coverage across all major ServiceNow modules using the latest Zurich API references,
+with seamless, production-ready integration across all major AI providers and SDKs.
+
+<br/>
+
+</div>
+
+---
+
+## Why now-ai-kit
+
+<table>
+<tr>
+<td width="33%" valign="top">
+
+### Broadest Module Coverage
+
+150+ production-ready tools spanning every ServiceNow domain: ITSM, ITOM, HRSD, CSM, SecOps, GRC, Agile, ATF, Flow Designer, Scripting, Reporting, Now Assist, and more. No other MCP server comes close to this depth.
+
+</td>
+<td width="33%" valign="top">
+
+### Any AI Provider or SDK
+
+Works out of the box with **Claude**, **GPT-4o**, **Gemini / Vertex AI**, **Cursor**, **VS Code Copilot**, and **OpenAI Codex**. OAuth 2.0 and Basic Auth supported for every client. Role-based tool packages let you expose exactly the right tools per persona.
+
+</td>
+<td width="33%" valign="top">
+
+### Thoroughly Tested & Production-Ready
+
+61 unit tests, four-tier permission system, role-based tool packages, 100+ real-world examples, and complete documentation. Built on the ServiceNow Zurich release APIs with full TypeScript types throughout.
+
+</td>
+</tr>
+</table>
 
 ---
 
 ## Quick Links
 
-| Topic | Link |
-|-------|------|
-| Getting Started (Beginners) | [Jump to section](#getting-started-beginners) |
-| Getting Started (Advanced) | [Jump to section](#getting-started-advanced-developers) |
-| All 112 Tools Reference | [docs/TOOLS.md](docs/TOOLS.md) |
+| Resource | Link |
+|----------|------|
+| All 150+ Tools Reference | [docs/TOOLS.md](docs/TOOLS.md) |
+| Client Setup (Claude, GPT, Gemini, Cursor, VS Code) | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
 | Role-Based Tool Packages | [docs/TOOL_PACKAGES.md](docs/TOOL_PACKAGES.md) |
-| Client Setup Guides | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
-| Now Assist / AI Integration | [docs/NOW_ASSIST.md](docs/NOW_ASSIST.md) |
-| ATF Testing | [docs/ATF.md](docs/ATF.md) |
+| Now Assist & AI Integration | [docs/NOW_ASSIST.md](docs/NOW_ASSIST.md) |
+| ATF Testing Guide | [docs/ATF.md](docs/ATF.md) |
 | Scripting Management | [docs/SCRIPTING.md](docs/SCRIPTING.md) |
 | Reporting & Analytics | [docs/REPORTING.md](docs/REPORTING.md) |
 | Multi-Instance Setup | [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md) |
-| Security Policy | [SECURITY.md](SECURITY.md) |
+| 100+ Real-World Examples | [EXAMPLES.md](EXAMPLES.md) |
 | Changelog | [CHANGELOG.md](CHANGELOG.md) |
 
 ---
 
-## What's Included
+## Module Coverage
 
-### Tool Domains
+17 domain modules covering the full ServiceNow platform:
 
-| Domain | Tools | Permission Required | Key Capabilities |
-|--------|-------|---------------------|-----------------|
-| Core & CMDB | 16 | Read-only | Query records, schema discovery, CMDB, ITOM, Discovery, MID servers |
-| Incident Management | 7 | Write for create/update | Create, update, resolve, close, work notes |
-| Problem Management | 4 | Write for create/update | Create, get, update, resolve problems |
-| Change Management | 5 | Write for updates | Get, list, update, submit for approval, close |
-| Task Management | 4 | Write for updates | Get, list my tasks, update, complete |
-| Knowledge Base | 6 | Write for create/publish | Search, get, create, update, publish articles |
-| Service Catalog & Approvals | 10 | Write for orders/approvals | Browse catalog, order items, manage approvals, SLA tracking |
-| User & Group Management | 8 | Write for create/update | List, create, update users and groups, manage membership |
-| Reporting & Analytics | 8 | Read-only | Aggregate queries, trend analysis, performance analytics, scheduled jobs |
-| ATF Testing | 9 | `ATF_ENABLED=true` | Run test suites, get results, Zurich Failure Insight |
-| Now Assist / AI | 10 | `NOW_ASSIST_ENABLED=true` | NLQ, AI Search, summaries, resolution suggestions, agentic playbooks |
-| Scripting | 16 | `SCRIPTING_ENABLED=true` | Business rules, script includes, client scripts, changesets |
-| Agile / Scrum | 9 | Write for create/update | Stories, epics, scrum tasks |
-
-### Authentication Support
-
-Both **Basic Auth** and **OAuth 2.0** are supported for all client integrations:
-
-| Method | Best For |
-|--------|----------|
-| Basic Auth | Development, personal use |
-| OAuth Client Credentials | Production, service accounts |
-| OAuth Password Grant | Automated pipelines |
+| Module | Tools | Key Capabilities |
+|--------|------:|-----------------|
+| Core & CMDB | 16 | Record query, schema discovery, CMDB CIs, ITOM Discovery, MID Servers |
+| Incident Management | 7 | Full incident lifecycle — create, update, resolve, close, work notes |
+| Problem Management | 4 | Problem records, root cause analysis, known errors |
+| Change Management | 5 | Change requests, CAB approvals, closures |
+| Task Management | 4 | Generic tasks, my-task lists, completions |
+| Knowledge Base | 6 | Search, create, update, publish KB articles |
+| Service Catalog & Approvals | 10 | Catalog browsing, order items, SLA tracking, approval workflows |
+| User & Group Management | 8 | Users, groups, membership, role assignments |
+| Reporting & Analytics | 8 | Aggregate queries, trend analysis, Performance Analytics, scheduled jobs |
+| ATF Testing | 9 | Test suites, test execution, Zurich Failure Insight |
+| Now Assist / AI | 10 | NLQ, AI Search, summaries, resolution suggestions, Agentic Playbooks |
+| Scripting | 16 | Business rules, script includes, client scripts, changesets |
+| Agile / Scrum | 9 | Stories, epics, sprints, scrum tasks |
+| HR Service Delivery (HRSD) | 12 | HR cases, HR services, employee profiles, onboarding/offboarding |
+| Customer Service Management (CSM) | 11 | Customer cases, accounts, contacts, products, SLAs |
+| Security Operations & GRC | 11 | SecOps incidents, vulnerabilities, GRC risks, controls, threat intel |
+| Flow Designer & Process Automation | 10 | Flows, subflows, triggers, executions, Process Automation playbooks |
 
 ---
 
-## Getting Started: Beginners
+## Authentication
 
-This section walks you through connecting this MCP server to **Claude Desktop** step by step. No prior MCP experience needed.
+Both **Basic Auth** and **OAuth 2.0** are fully supported across all client integrations:
 
-### Step 1: Prerequisites
+| Method | Best For |
+|--------|----------|
+| Basic Auth | Development, personal instances, quick setup |
+| OAuth 2.0 Client Credentials | Production deployments, service accounts |
+| OAuth 2.0 Password Grant | Automated CI/CD pipelines |
 
-- **Node.js 20+** — Download from [nodejs.org](https://nodejs.org)
-- **Claude Desktop** — Download from [claude.ai/download](https://claude.ai/download)
-- A **ServiceNow instance** with your username and password
+---
 
-Verify Node.js:
+## Permission System
+
+A four-tier permission model keeps your instance safe by default:
+
+| Tier | Environment Variable | Covers |
+|------|---------------------|--------|
+| 0 — Read | *(always on)* | All query and read operations |
+| 1 — Write | `WRITE_ENABLED=true` | Create/update across ITSM, HRSD, CSM, Agile |
+| 2 — CMDB Write | `CMDB_WRITE_ENABLED=true` | CI create/update in the CMDB |
+| 3 — Scripting | `SCRIPTING_ENABLED=true` | Business rules, script includes, changesets |
+| 4 — Now Assist | `NOW_ASSIST_ENABLED=true` | AI Agentic Playbooks, NLQ, AI Search |
+
+---
+
+## Role-Based Tool Packages
+
+Set `MCP_TOOL_PACKAGE` to expose only the tools relevant to each persona:
+
+| Package | Persona | Tools Included |
+|---------|---------|---------------|
+| `full` | Administrators | All 150+ tools |
+| `service_desk` | L1/L2 Agents | Incidents, tasks, approvals, KB, SLA |
+| `change_coordinator` | Change Managers | Changes, CAB, CMDB, approvals |
+| `knowledge_author` | KB Authors | Knowledge base create/publish |
+| `catalog_builder` | Catalog Admins | Catalog, users, groups |
+| `system_administrator` | Sys Admins | Users, groups, reports, logs |
+| `platform_developer` | Developers | Scripts, ATF, changesets |
+| `itom_engineer` | ITOM Engineers | CMDB, Discovery, MID servers, events |
+| `agile_manager` | Scrum Masters | Stories, epics, sprints |
+| `ai_developer` | AI Builders | Now Assist, NLQ, Agentic Playbooks |
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- **Node.js 20+** — [nodejs.org](https://nodejs.org)
+- A **ServiceNow instance** (free developer instance at [developer.servicenow.com](https://developer.servicenow.com))
+- An AI client: Claude Desktop, Claude Code, Cursor, VS Code, or any OpenAI/Gemini-compatible client
+
+### Install
+
 ```bash
-node --version  # should print v20.x.x or higher
-```
+# Option A — npm (recommended)
+npm install -g now-ai-kit
 
-### Step 2: Get the Code
-
-```bash
+# Option B — clone from source
 git clone https://github.com/habenani-p/servicenow-mcp.git
 cd servicenow-mcp
+npm install && npm run build
 ```
 
-### Step 3: Install and Build
+### Configure
 
-```bash
-npm install
-npm run build
-```
-
-You should see no errors. The compiled server is now at `dist/server.js`.
-
-### Step 4: Configure Your Credentials
-
-Copy the example environment file:
 ```bash
 cp .env.example .env
 ```
 
-Open `.env` in a text editor and fill in your ServiceNow details:
-```env
-# Your ServiceNow instance URL (no trailing slash)
-SERVICENOW_INSTANCE_URL=https://yourcompany.service-now.com
+Edit `.env`:
 
-# Authentication — choose Basic Auth to start
+```env
+# ServiceNow instance URL (no trailing slash)
+SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com
+
+# Auth method: basic or oauth
 SERVICENOW_AUTH_METHOD=basic
 SERVICENOW_BASIC_USERNAME=your.username
 SERVICENOW_BASIC_PASSWORD=your_password
 
-# Keep writes disabled to start safely
+# Permission gates (start with all off for safety)
 WRITE_ENABLED=false
+CMDB_WRITE_ENABLED=false
+SCRIPTING_ENABLED=false
+NOW_ASSIST_ENABLED=false
+
+# Optional: limit tools to a role package
+# MCP_TOOL_PACKAGE=service_desk
 ```
 
-### Step 5: Connect to Claude Desktop
+### Connect to Claude Desktop
 
-Find your Claude Desktop config file:
+Find your config file:
 - **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`
 - **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
 - **Linux**: `~/.config/Claude/claude_desktop_config.json`
 
-Open (or create) that file and add the ServiceNow server. Replace `/absolute/path/to` with the actual path to where you cloned the repo:
+Add the server:
 
 ```json
 {
   "mcpServers": {
-    "servicenow": {
+    "now-ai-kit": {
       "command": "node",
       "args": ["/absolute/path/to/servicenow-mcp/dist/server.js"],
       "env": {
-        "SERVICENOW_INSTANCE_URL": "https://yourcompany.service-now.com",
+        "SERVICENOW_INSTANCE_URL": "https://yourinstance.service-now.com",
         "SERVICENOW_AUTH_METHOD": "basic",
         "SERVICENOW_BASIC_USERNAME": "your.username",
         "SERVICENOW_BASIC_PASSWORD": "your_password",
@@ -136,257 +216,271 @@ Open (or create) that file and add the ServiceNow server. Replace `/absolute/pat
 }
 ```
 
-Ready-to-edit config files are in [`clients/claude-desktop/`](clients/claude-desktop/).
+Restart Claude Desktop. You will see now-ai-kit listed in the MCP servers panel.
 
-### Step 6: Test It
+### Connect to Claude Code
 
-Restart Claude Desktop. Open a new chat and try:
-
-```
-List my 5 most recent open incidents
-```
-
-```
-Search the knowledge base for "VPN issues"
+```bash
+claude mcp add now-ai-kit node /absolute/path/to/servicenow-mcp/dist/server.js \
+  --env SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com \
+  --env SERVICENOW_AUTH_METHOD=basic \
+  --env SERVICENOW_BASIC_USERNAME=your.username \
+  --env SERVICENOW_BASIC_PASSWORD=your_password
 ```
 
-```
-Show me all active P1 and P2 incidents
-```
+### Connect to Cursor
 
-If you see ServiceNow data in the response, it's working.
-
-> **Troubleshooting**: Open Claude Desktop → Settings → Developer → MCP Servers. If `servicenow` shows a red dot, check that the path in the config is correct and that `npm run build` completed without errors.
-
-### Step 7: Enable Writes (Optional)
-
-When you're ready to create and update records, set `WRITE_ENABLED=true` in the config:
+Create `.cursor/mcp.json` in your project root:
 
 ```json
-"WRITE_ENABLED": "true"
+{
+  "mcpServers": {
+    "now-ai-kit": {
+      "command": "node",
+      "args": ["/absolute/path/to/servicenow-mcp/dist/server.js"],
+      "env": {
+        "SERVICENOW_INSTANCE_URL": "https://yourinstance.service-now.com",
+        "SERVICENOW_AUTH_METHOD": "basic",
+        "SERVICENOW_BASIC_USERNAME": "your.username",
+        "SERVICENOW_BASIC_PASSWORD": "your_password"
+      }
+    }
+  }
+}
 ```
 
-Then you can try:
-```
-Create a P3 incident: "Email is slow for the sales team"
-```
-
-For detailed client-specific setup, see [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md).
+For full setup guides for every client (including OAuth 2.0 variants), see [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md).
 
 ---
 
-## Getting Started: Advanced Developers
+## Example Interactions
 
-### Clone and Build
+Once connected, ask your AI assistant in plain language:
 
-```bash
-git clone https://github.com/habenani-p/servicenow-mcp.git
-cd servicenow-mcp
-npm install
-npm run build
-npm test   # 41 tests, all should pass
+```
+Show me all open P1 incidents assigned to the Network Operations group.
+```
+```
+Create an incident for a VPN outage affecting the London office, high urgency, assign to IT Network team.
+```
+```
+What CMDB CIs does the ERP application depend on?
+```
+```
+Run the Regression Test Suite and show me any failures with Zurich Failure Insight details.
+```
+```
+Summarise the last 30 days of incident trends by category.
+```
+```
+Open an HR onboarding case for new employee Jane Smith starting Monday.
+```
+```
+List all high-severity vulnerabilities on production servers that are still open.
+```
+```
+Trigger the Employee Offboarding flow for user john.doe with effective date 2025-03-01.
+```
+```
+Find all customer cases for Acme Corp that are past their SLA breach date.
+```
+```
+Show me GRC risks in the Data Privacy category that are still in draft state.
 ```
 
-### OAuth 2.0 Setup
+For 100+ real-world examples with expected inputs, outputs, and advanced workflows, see [EXAMPLES.md](EXAMPLES.md).
 
-For production deployments, use OAuth instead of Basic Auth:
+---
 
-**1. Create an OAuth Application in ServiceNow**
+## Advanced Configuration
 
-Navigate to: System OAuth → Application Registry → New → Create an OAuth API endpoint for external clients
-
-Note down: Client ID and Client Secret.
-
-**2. Configure the MCP Server**
+### OAuth 2.0
 
 ```env
-SERVICENOW_INSTANCE_URL=https://yourcompany.service-now.com
 SERVICENOW_AUTH_METHOD=oauth
-SERVICENOW_OAUTH_CLIENT_ID=your_client_id
-SERVICENOW_OAUTH_CLIENT_SECRET=your_client_secret
-SERVICENOW_OAUTH_USERNAME=service_account_user
-SERVICENOW_OAUTH_PASSWORD=service_account_password
+SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com
+SERVICENOW_CLIENT_ID=your_oauth_client_id
+SERVICENOW_CLIENT_SECRET=your_oauth_client_secret
+SERVICENOW_OAUTH_GRANT_TYPE=client_credentials
 ```
-
-Full OAuth walkthrough: [docs/SERVICENOW_OAUTH_SETUP.md](docs/SERVICENOW_OAUTH_SETUP.md)
-
-### Role-Based Tool Packages
-
-Rather than loading all 112 tools, configure role-specific subsets using `MCP_TOOL_PACKAGE`:
-
-```env
-MCP_TOOL_PACKAGE=service_desk       # ~25 tools: incidents, approvals, KB, SLA
-MCP_TOOL_PACKAGE=platform_developer # scripting, ATF, changesets
-MCP_TOOL_PACKAGE=ai_developer       # Now Assist, NLQ, AI Search
-MCP_TOOL_PACKAGE=full               # all 112 tools (default)
-```
-
-See all packages: [docs/TOOL_PACKAGES.md](docs/TOOL_PACKAGES.md)
-
-### Permission Tiers
-
-| Tier | Environment Variable | Tools Unlocked |
-|------|---------------------|----------------|
-| 0 | *(none)* | All read/search tools |
-| 1 | `WRITE_ENABLED=true` | Create/update for ITSM, catalog, users, agile |
-| 2 | `WRITE_ENABLED=true` + `CMDB_WRITE_ENABLED=true` | CMDB CI create/update/relate |
-| 3 | `WRITE_ENABLED=true` + `SCRIPTING_ENABLED=true` | Business rules, script includes, changesets |
-| AI | `NOW_ASSIST_ENABLED=true` | Generative AI, NLQ, AI Search, agentic playbooks |
-| ATF | `ATF_ENABLED=true` | Run ATF test suites and cases |
-
-### All Environment Variables
-
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `SERVICENOW_INSTANCE_URL` | *(required)* | Your ServiceNow instance URL |
-| `SERVICENOW_AUTH_METHOD` | `basic` | Auth method: `basic` or `oauth` |
-| `SERVICENOW_BASIC_USERNAME` | — | Username for Basic Auth |
-| `SERVICENOW_BASIC_PASSWORD` | — | Password for Basic Auth |
-| `SERVICENOW_OAUTH_CLIENT_ID` | — | OAuth Client ID |
-| `SERVICENOW_OAUTH_CLIENT_SECRET` | — | OAuth Client Secret |
-| `SERVICENOW_OAUTH_USERNAME` | — | Username for OAuth Password Grant |
-| `SERVICENOW_OAUTH_PASSWORD` | — | Password for OAuth Password Grant |
-| `WRITE_ENABLED` | `false` | Enable create/update/delete operations |
-| `CMDB_WRITE_ENABLED` | `false` | Enable CMDB write operations |
-| `SCRIPTING_ENABLED` | `false` | Enable scripting management tools |
-| `NOW_ASSIST_ENABLED` | `false` | Enable Now Assist / AI tools (Zurich) |
-| `ATF_ENABLED` | `false` | Enable ATF test execution |
-| `MCP_TOOL_PACKAGE` | `full` | Role-based tool package to load |
-| `MAX_RECORDS` | `100` | Default max records per query |
-| `AGILE_TABLE_PREFIX` | `rm_` | Table prefix for Agile/Scrum tables |
 
 ### Multi-Instance Setup
 
-Connect to multiple ServiceNow instances (dev/staging/prod) in one MCP session:
+Manage multiple ServiceNow environments with `instances.json`:
 
-```bash
-cp instances.example.json instances.json
-# Edit instances.json with your instance URLs and credentials
+```json
+{
+  "instances": [
+    {
+      "name": "production",
+      "url": "https://prod.service-now.com",
+      "authMethod": "oauth",
+      "clientId": "...",
+      "clientSecret": "..."
+    },
+    {
+      "name": "dev",
+      "url": "https://dev12345.service-now.com",
+      "authMethod": "basic",
+      "username": "admin",
+      "password": "..."
+    }
+  ]
+}
 ```
 
-See [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md) for full setup.
+See [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md) for full instructions.
 
-### Run with a Specific Package
+### Docker
 
 ```bash
-# Service desk mode
-MCP_TOOL_PACKAGE=service_desk node dist/server.js
-
-# Developer mode with scripting and ATF
-MCP_TOOL_PACKAGE=platform_developer SCRIPTING_ENABLED=true ATF_ENABLED=true node dist/server.js
+docker build -t now-ai-kit .
+docker run -e SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com \
+           -e SERVICENOW_AUTH_METHOD=basic \
+           -e SERVICENOW_BASIC_USERNAME=admin \
+           -e SERVICENOW_BASIC_PASSWORD=password \
+           now-ai-kit
 ```
 
 ---
 
-## Client Setup Guides
+## Supported AI Clients
 
-Step-by-step setup for each supported AI client:
-
-| Client | Guide | Auth Options |
-|--------|-------|-------------|
-| Claude Code | [clients/claude-code/SETUP.md](clients/claude-code/SETUP.md) | Basic, OAuth |
-| Claude Desktop | [clients/claude-desktop/SETUP.md](clients/claude-desktop/SETUP.md) | Basic, OAuth |
-| OpenAI Codex | [clients/codex/SETUP.md](clients/codex/SETUP.md) | Basic, OAuth |
-| Google Gemini / Vertex AI | [clients/gemini/SETUP.md](clients/gemini/SETUP.md) | Basic, OAuth |
-| Cursor | [clients/cursor/SETUP.md](clients/cursor/SETUP.md) | Basic, OAuth |
-| VS Code | [clients/vscode/SETUP.md](clients/vscode/SETUP.md) | Basic, OAuth |
-
-Full unified guide: [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md)
+| Client | Auth Methods | Config Guide |
+|--------|-------------|-------------|
+| Claude Desktop | Basic, OAuth 2.0 | [clients/claude-desktop/SETUP.md](clients/claude-desktop/SETUP.md) |
+| Claude Code | Basic, OAuth 2.0 | [clients/claude-code/SETUP.md](clients/claude-code/SETUP.md) |
+| Cursor | Basic, OAuth 2.0 | [clients/cursor/SETUP.md](clients/cursor/SETUP.md) |
+| VS Code (Copilot) | Basic, OAuth 2.0 | [clients/vscode/SETUP.md](clients/vscode/SETUP.md) |
+| OpenAI Codex | Basic, OAuth 2.0 | [clients/codex/SETUP.md](clients/codex/SETUP.md) |
+| Google Gemini / Vertex AI | Basic, OAuth 2.0 | [clients/gemini/SETUP.md](clients/gemini/SETUP.md) |
 
 ---
 
-## Build, Test, and Development
+## What's New in v2.0
+
+- **154 tools** across 17 domain modules (up from 16 tools in v1.0)
+- **HRSD module** — HR cases, services, profiles, onboarding/offboarding workflows
+- **CSM module** — Customer cases, accounts, contacts, products, SLA tracking
+- **Security Operations & GRC** — SecOps incidents, vulnerabilities, risks, controls, threat intel
+- **Flow Designer** — List, inspect, trigger, and monitor flows and subflows
+- **OAuth 2.0** for all six AI clients
+- **Role-based tool packages** — 10 persona-specific packages
+- **Now Assist Agentic Playbooks** — Zurich release AI automation
+- **ATF Failure Insight** — Zurich-release test failure diagnostics
+- **61 unit tests** covering all permission tiers, routing, and domain handlers
+- **Complete documentation** — 8 reference guides in `docs/`
+
+---
+
+## Documentation
+
+| Guide | Description |
+|-------|-------------|
+| [docs/TOOLS.md](docs/TOOLS.md) | Complete reference for all 150+ tools with parameters, return types, and permission requirements |
+| [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) | Step-by-step setup for all six AI clients, both Basic Auth and OAuth 2.0 |
+| [docs/TOOL_PACKAGES.md](docs/TOOL_PACKAGES.md) | Role-based package reference — which tools each persona package includes |
+| [docs/NOW_ASSIST.md](docs/NOW_ASSIST.md) | Now Assist and AI integration guide — NLQ, AI Search, Agentic Playbooks |
+| [docs/ATF.md](docs/ATF.md) | ATF testing guide — suites, test runs, Zurich Failure Insight |
+| [docs/SCRIPTING.md](docs/SCRIPTING.md) | Scripting management — business rules, script includes, changesets |
+| [docs/REPORTING.md](docs/REPORTING.md) | Reporting and analytics — aggregate queries, Performance Analytics |
+| [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md) | Multi-instance configuration via `instances.json` or environment variables |
+| [EXAMPLES.md](EXAMPLES.md) | 100+ real-world examples with inputs, outputs, and advanced workflows |
+
+---
+
+## Development
 
 ```bash
-npm install          # Install dependencies
-npm run build        # Compile TypeScript
-npm test             # Run all tests (Vitest)
-npm run type-check   # Type check without emit
-npm run dev          # Watch mode for development
+# Install dependencies
+npm install
+
+# Run in development mode (hot reload)
+npm run dev
+
+# Build
+npm run build
+
+# Run all tests
+npm test
+
+# Type check
+npm run type-check
+
+# Lint
+npm run lint
 ```
 
 ### Project Structure
 
 ```
 src/
-├── server.ts              # MCP server entry point
-├── servicenow/
-│   ├── client.ts          # HTTP client (Basic Auth + OAuth)
-│   └── types.ts           # 200+ TypeScript interfaces
-├── tools/
-│   ├── index.ts           # Router + package system
-│   ├── core.ts            # Core/CMDB/ITOM tools (16)
-│   ├── incident.ts        # Incident tools (7)
-│   ├── problem.ts         # Problem tools (4)
-│   ├── change.ts          # Change request tools (5)
-│   ├── task.ts            # Task tools (4)
-│   ├── knowledge.ts       # Knowledge base tools (6)
-│   ├── catalog.ts         # Catalog/approval/SLA tools (10)
-│   ├── user.ts            # User/group tools (8)
-│   ├── reporting.ts       # Reporting/analytics tools (8)
-│   ├── atf.ts             # ATF testing tools (9)
-│   ├── now-assist.ts      # Now Assist / AI tools (10)
-│   ├── script.ts          # Scripting tools (16)
-│   └── agile.ts           # Agile/Scrum tools (9)
-└── utils/
-    ├── errors.ts          # ServiceNowError class
-    ├── logging.ts         # Structured logging
-    └── permissions.ts     # Permission tier helpers
-
-clients/
-├── claude-code/           # Claude Code setup
-├── claude-desktop/        # Claude Desktop configs (basic + oauth)
-├── codex/                 # OpenAI Codex client + setup
-├── gemini/                # Google Gemini client + setup
-├── cursor/                # Cursor MCP configs
-└── vscode/                # VS Code MCP configs
-
-docs/                      # Detailed documentation
-tests/                     # Vitest test suites (41 passing)
+  server.ts              — MCP server entry point
+  servicenow/
+    client.ts            — ServiceNow REST API client (Basic + OAuth)
+    types.ts             — Full TypeScript type definitions
+  tools/
+    index.ts             — Tool router & role-based package system
+    core.ts              — Core platform & CMDB (16 tools)
+    incident.ts          — Incident management (7 tools)
+    problem.ts           — Problem management (4 tools)
+    change.ts            — Change management (5 tools)
+    task.ts              — Task management (4 tools)
+    knowledge.ts         — Knowledge base (6 tools)
+    catalog.ts           — Service catalog & approvals (10 tools)
+    user.ts              — User & group management (8 tools)
+    reporting.ts         — Reporting & analytics (8 tools)
+    atf.ts               — ATF testing (9 tools)
+    now-assist.ts        — Now Assist / AI (10 tools)
+    script.ts            — Scripting management (16 tools)
+    agile.ts             — Agile / Scrum (9 tools)
+    hrsd.ts              — HR Service Delivery (12 tools)
+    csm.ts               — Customer Service Management (11 tools)
+    security.ts          — Security Operations & GRC (11 tools)
+    flow.ts              — Flow Designer & Process Automation (10 tools)
+  utils/
+    permissions.ts       — Four-tier permission gate functions
+    errors.ts            — Typed error classes
+tests/
+  tools/                 — Unit tests (61 passing)
+docs/                    — Reference documentation (8 guides)
+clients/                 — Per-client setup and config files
+  claude-desktop/
+  claude-code/
+  cursor/
+  vscode/
+  codex/
+  gemini/
 ```
-
----
-
-## ServiceNow API References (Zurich Release)
-
-This implementation targets the **ServiceNow Zurich (2025)** release APIs:
-
-- [Table API](https://docs.servicenow.com/bundle/zurich-api-reference/page/integrate/inbound-rest/concept/c_TableAPI.html)
-- [Stats / Aggregate API](https://docs.servicenow.com/bundle/zurich-api-reference/page/integrate/inbound-rest/concept/c_AggregateAPI.html)
-- [Service Catalog API](https://docs.servicenow.com/bundle/zurich-api-reference/page/integrate/inbound-rest/concept/c_ServiceCatalogAPI.html)
-- [Now Assist Skills API](https://docs.servicenow.com/bundle/zurich-api-reference/page/integrate/inbound-rest/concept/c_NowAssistAPI.html)
-- [AI Search API](https://docs.servicenow.com/bundle/zurich-api-reference/page/integrate/inbound-rest/concept/c_AISearchAPI.html)
-- [ATF Runner API](https://docs.servicenow.com/bundle/zurich-api-reference/page/administer/auto-test-framework/concept/c_ATFRunnerAPI.html)
-- [Performance Analytics API](https://docs.servicenow.com/bundle/zurich-api-reference/page/integrate/inbound-rest/concept/c_PAScorecardsAPI.html)
-- [OAuth 2.0](https://docs.servicenow.com/bundle/zurich-platform-security/page/administer/security/concept/c_OAuthApplications.html)
-
----
-
-## Security
-
-- **Read-only by default** — write operations require explicit opt-in via `WRITE_ENABLED=true`
-- **OAuth 2.0** with token caching and automatic refresh
-- **Credential redaction** — secrets never appear in logs
-- **Tiered permissions** — scripting and AI features require separate flags
-
-See [SECURITY.md](SECURITY.md) for full details.
 
 ---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request.
+
+- Bug reports and feature requests: [open an issue](../../issues)
+- New tool domains, additional tests, or documentation improvements are especially appreciated
+- All PRs require `npm test` to pass
+
+---
+
+## Security
+
+If you discover a security vulnerability, please follow the responsible disclosure process in [SECURITY.md](SECURITY.md). Do not open a public issue.
 
 ---
 
 ## License
 
-MIT License — see [LICENSE](LICENSE)
+[MIT](LICENSE) — free for personal and commercial use.
 
 ---
 
-## Support
+<div align="center">
 
-- Issues: [GitHub Issues](https://github.com/habenani-p/servicenow-mcp/issues)
+If now-ai-kit saves you time, please consider starring the repository — it helps others discover the project.
 
-**Note**: This is an open-source community project, not an official ServiceNow product.
+[![GitHub Stars](https://img.shields.io/github/stars/habenani-p/servicenow-mcp?style=social)](../../stargazers)
+
+</div>
