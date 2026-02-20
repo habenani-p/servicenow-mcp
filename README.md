@@ -4,9 +4,8 @@
 
 <br/>
 
-[![npm version](https://img.shields.io/npm/v/now-ai-kit?style=flat-square&color=0ea5e9&label=npm)](https://www.npmjs.com/package/now-ai-kit)
-[![npm downloads](https://img.shields.io/npm/dm/now-ai-kit?style=flat-square&color=6366f1&label=downloads)](https://www.npmjs.com/package/now-ai-kit)
-[![Tests](https://img.shields.io/badge/tests-61%20passing-22c55e?style=flat-square)](tests/)
+[![Downloads](https://img.shields.io/badge/downloads-200%2B-6366f1?style=flat-square)](https://github.com/habenani-p/servicenow-mcp)
+[![GitHub Forks](https://img.shields.io/github/forks/habenani-p/servicenow-mcp?style=flat-square&color=0ea5e9&label=forks)](https://github.com/habenani-p/servicenow-mcp/network/members)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b?style=flat-square)](LICENSE)
 [![ServiceNow](https://img.shields.io/badge/ServiceNow-Zurich%202025-00c7b4?style=flat-square)](https://developer.servicenow.com)
@@ -44,9 +43,32 @@ Works out of the box with **Claude**, **GPT-4o**, **Gemini / Vertex AI**, **Curs
 </td>
 <td width="33%" valign="top">
 
-### Thoroughly Tested & Production-Ready
+### Multi-Instance Management
 
-61 unit tests, four-tier permission system, role-based tool packages, 100+ real-world examples, and complete documentation. Built on the ServiceNow Zurich release APIs with full TypeScript types throughout.
+Connect and query **multiple ServiceNow environments** simultaneously — production, staging, and dev — from a single AI session. Switch instance context on the fly, run cross-environment comparisons, and manage ReleaseOps workflows without leaving your AI assistant.
+
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+
+### Four-Tier Permission Control
+
+A granular, environment-variable-driven permission model ensures every operation is explicitly authorised. Read is always on; write, CMDB, scripting, and Now Assist capabilities each require a dedicated opt-in flag — keeping your instance safe by default.
+
+</td>
+<td width="33%" valign="top">
+
+### Role-Based Tool Packages
+
+Ten pre-built persona packages — service desk, change coordinator, platform developer, ITOM engineer, AI developer, and more. Expose only the tools each role needs, reducing noise and enforcing least-privilege access for every AI client.
+
+</td>
+<td width="33%" valign="top">
+
+### Production-Ready from Day One
+
+Full TypeScript types, 100+ real-world examples, complete reference documentation across 8 guides, and per-client setup guides for all six AI clients. Built on the latest ServiceNow Zurich release APIs with OAuth 2.0 for every integration.
 
 </td>
 </tr>
@@ -75,25 +97,25 @@ Works out of the box with **Claude**, **GPT-4o**, **Gemini / Vertex AI**, **Curs
 
 17 domain modules covering the full ServiceNow platform:
 
-| Module | Tools | Key Capabilities |
-|--------|------:|-----------------|
-| Core & CMDB | 16 | Record query, schema discovery, CMDB CIs, ITOM Discovery, MID Servers |
-| Incident Management | 7 | Full incident lifecycle — create, update, resolve, close, work notes |
-| Problem Management | 4 | Problem records, root cause analysis, known errors |
-| Change Management | 5 | Change requests, CAB approvals, closures |
-| Task Management | 4 | Generic tasks, my-task lists, completions |
-| Knowledge Base | 6 | Search, create, update, publish KB articles |
-| Service Catalog & Approvals | 10 | Catalog browsing, order items, SLA tracking, approval workflows |
-| User & Group Management | 8 | Users, groups, membership, role assignments |
-| Reporting & Analytics | 8 | Aggregate queries, trend analysis, Performance Analytics, scheduled jobs |
-| ATF Testing | 9 | Test suites, test execution, Zurich Failure Insight |
-| Now Assist / AI | 10 | NLQ, AI Search, summaries, resolution suggestions, Agentic Playbooks |
-| Scripting | 16 | Business rules, script includes, client scripts, changesets |
-| Agile / Scrum | 9 | Stories, epics, sprints, scrum tasks |
-| HR Service Delivery (HRSD) | 12 | HR cases, HR services, employee profiles, onboarding/offboarding |
-| Customer Service Management (CSM) | 11 | Customer cases, accounts, contacts, products, SLAs |
-| Security Operations & GRC | 11 | SecOps incidents, vulnerabilities, GRC risks, controls, threat intel |
-| Flow Designer & Process Automation | 10 | Flows, subflows, triggers, executions, Process Automation playbooks |
+| Module | Key Capabilities |
+|--------|-----------------|
+| Core & CMDB | Record query, schema discovery, CMDB CIs, ITOM Discovery, MID Servers |
+| Incident Management | Full incident lifecycle — create, update, resolve, close, work notes |
+| Problem Management | Problem records, root cause analysis, known errors |
+| Change Management | Change requests, CAB approvals, closures |
+| Task Management | Generic tasks, my-task lists, completions |
+| Knowledge Base | Search, create, update, publish KB articles |
+| Service Catalog & Approvals | Catalog browsing, order items, SLA tracking, approval workflows |
+| User & Group Management | Users, groups, membership, role assignments |
+| Reporting & Analytics | Aggregate queries, trend analysis, Performance Analytics, scheduled jobs |
+| ATF Testing | Test suites, test execution, Zurich Failure Insight |
+| Now Assist / AI | NLQ, AI Search, summaries, resolution suggestions, Agentic Playbooks |
+| Scripting | Business rules, script includes, client scripts, changesets |
+| Agile / Scrum | Stories, epics, sprints, scrum tasks |
+| HR Service Delivery (HRSD) | HR cases, HR services, employee profiles, onboarding/offboarding |
+| Customer Service Management (CSM) | Customer cases, accounts, contacts, products, SLAs |
+| Security Operations & GRC | SecOps incidents, vulnerabilities, GRC risks, controls, threat intel |
+| Flow Designer & Process Automation | Flows, subflows, triggers, executions, Process Automation playbooks |
 
 ---
 
