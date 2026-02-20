@@ -19,6 +19,28 @@ This server addresses these by providing:
 - **Natural language**: Search and update records conversationally (experimental)
 - **Allowlisting**: Table and Script Include access controls
 
+## Any AI Provider or SDK
+
+Works out of the box with every major AI interface — no custom connectors required:
+
+| Client / Interface | Type | Notes |
+|--------------------|------|-------|
+| **Claude Desktop** | Desktop app | Native MCP support |
+| **Claude Code** | CLI | Native MCP support |
+| **Cursor** | AI code editor | MCP via settings |
+| **Windsurf** (Codeium) | AI code editor | MCP via settings |
+| **GitHub Copilot** (VS Code) | IDE extension | MCP via VS Code settings |
+| **Continue.dev** | VS Code / JetBrains | MCP via config.json |
+| **Cline** | VS Code extension | MCP via extension settings |
+| **Zed** | AI editor | MCP via assistant panel |
+| **Amazon Q Developer** | IDE / CLI | MCP via toolkit settings |
+| **JetBrains AI Assistant** | IDE plugin | MCP via plugin settings |
+| **Gemini CLI** | CLI | MCP via tool config |
+| **OpenAI SDK / GPT-4o** | SDK / API | Via any MCP-to-OpenAI bridge |
+| **Ollama + Llama 3** | Local models | Via any MCP-compatible host |
+
+**OAuth 2.0 and Basic Auth** are supported for every client. **Role-based tool packages** let you expose exactly the right tools per persona — read-only for analysts, full ITSM tools for engineers, ITOM-only for ops teams.
+
 ## 🚀 Getting Started
 
 **New to Claude Desktop or MCP servers?** Start with our comprehensive installation guide:
