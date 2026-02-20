@@ -1,0 +1,29 @@
+{
+  "comment": "Copy this file to instances.json and fill in your credentials. Do NOT commit instances.json — it contains secrets.",
+  "instances": {
+    "dev": {
+      "instance_url": "https://YOUR_DEV_INSTANCE.service-now.com",
+      "auth_method": "basic",
+      "username": "YOUR_DEV_USERNAME",
+      "password": "YOUR_DEV_PASSWORD",
+      "description": "Development instance — write operations allowed"
+    },
+    "staging": {
+      "instance_url": "https://YOUR_STAGING_INSTANCE.service-now.com",
+      "auth_method": "oauth",
+      "client_id": "YOUR_OAUTH_CLIENT_ID",
+      "client_secret": "YOUR_OAUTH_CLIENT_SECRET",
+      "username": "YOUR_SERVICE_ACCOUNT",
+      "password": "YOUR_SERVICE_ACCOUNT_PASSWORD",
+      "description": "Staging instance — validation before prod"
+    },
+    "prod": {
+      "instance_url": "https://YOUR_PROD_INSTANCE.service-now.com",
+      "auth_method": "oauth",
+      "client_id": "YOUR_OAUTH_CLIENT_ID",
+      "client_secret": "YOUR_OAUTH_CLIENT_SECRET",
+      "description": "Production instance — read-only by default"
+    }
+  },
+  "default_instance": "dev"
+}

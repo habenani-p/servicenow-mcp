@@ -1,0 +1,144 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 340" width="1200" height="340">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#161b22;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="accentGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#0ea5e9;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1" />
+      <stop offset="60%" style="stop-color:#818cf8;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a78bfa;stop-opacity:1" />
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="8" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="340" fill="url(#bgGrad)" rx="12"/>
+
+  <!-- Subtle grid lines -->
+  <g opacity="0.04" stroke="#60a5fa" stroke-width="0.5">
+    <line x1="0" y1="85" x2="1200" y2="85"/>
+    <line x1="0" y1="170" x2="1200" y2="170"/>
+    <line x1="0" y1="255" x2="1200" y2="255"/>
+    <line x1="200" y1="0" x2="200" y2="340"/>
+    <line x1="400" y1="0" x2="400" y2="340"/>
+    <line x1="600" y1="0" x2="600" y2="340"/>
+    <line x1="800" y1="0" x2="800" y2="340"/>
+    <line x1="1000" y1="0" x2="1000" y2="340"/>
+  </g>
+
+  <!-- Top accent bar -->
+  <rect x="0" y="0" width="1200" height="3" fill="url(#accentGrad)" rx="0"/>
+
+  <!-- Glow orbs background -->
+  <ellipse cx="200" cy="170" rx="180" ry="120" fill="#0ea5e9" opacity="0.04" filter="url(#softGlow)"/>
+  <ellipse cx="1050" cy="170" rx="160" ry="100" fill="#8b5cf6" opacity="0.05" filter="url(#softGlow)"/>
+
+  <!-- Left bracket decoration -->
+  <text x="52" y="210" font-family="'Courier New', monospace" font-size="140" fill="#0ea5e9" opacity="0.08" font-weight="bold">{</text>
+  <text x="1095" y="210" font-family="'Courier New', monospace" font-size="140" fill="#8b5cf6" opacity="0.08" font-weight="bold">}</text>
+
+  <!-- Main logo text: now-ai-kit -->
+  <text
+    x="600" y="148"
+    font-family="'SF Pro Display', 'Segoe UI', system-ui, -apple-system, sans-serif"
+    font-size="82"
+    font-weight="700"
+    letter-spacing="-2"
+    text-anchor="middle"
+    fill="url(#textGrad)"
+    filter="url(#glow)"
+  >now-ai-kit</text>
+
+  <!-- Accent underline -->
+  <rect x="340" y="163" width="520" height="2.5" fill="url(#accentGrad)" rx="2" opacity="0.7"/>
+
+  <!-- Tagline -->
+  <text
+    x="600" y="208"
+    font-family="'SF Pro Text', 'Segoe UI', system-ui, sans-serif"
+    font-size="18"
+    font-weight="400"
+    letter-spacing="0.3"
+    text-anchor="middle"
+    fill="#94a3b8"
+  >The Most Advanced &amp; Comprehensive ServiceNow MCP Server</text>
+
+  <!-- Sub-tagline -->
+  <text
+    x="600" y="236"
+    font-family="'SF Pro Text', 'Segoe UI', system-ui, sans-serif"
+    font-size="14"
+    font-weight="300"
+    letter-spacing="0.2"
+    text-anchor="middle"
+    fill="#64748b"
+  >Full module coverage · Latest ServiceNow API references · Integrates with all major AI providers and SDKs</text>
+
+  <!-- Stats row -->
+  <!-- Divider line above stats -->
+  <line x1="100" y1="268" x2="1100" y2="268" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Stat 1: Tools -->
+  <g transform="translate(170, 295)">
+    <text x="0" y="0" font-family="'SF Pro Display', system-ui, sans-serif" font-size="22" font-weight="700" fill="#38bdf8" text-anchor="middle">150+</text>
+    <text x="0" y="18" font-family="'SF Pro Text', system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" letter-spacing="1.5" font-weight="500">TOOLS</text>
+  </g>
+
+  <!-- Divider 1 -->
+  <line x1="290" y1="278" x2="290" y2="322" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Stat 2: Modules -->
+  <g transform="translate(390, 295)">
+    <text x="0" y="0" font-family="'SF Pro Display', system-ui, sans-serif" font-size="22" font-weight="700" fill="#818cf8" text-anchor="middle">17</text>
+    <text x="0" y="18" font-family="'SF Pro Text', system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" letter-spacing="1.5" font-weight="500">MODULES</text>
+  </g>
+
+  <!-- Divider 2 -->
+  <line x1="510" y1="278" x2="510" y2="322" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Stat 3: Tests -->
+  <g transform="translate(600, 295)">
+    <text x="0" y="0" font-family="'SF Pro Display', system-ui, sans-serif" font-size="22" font-weight="700" fill="#34d399" text-anchor="middle">61</text>
+    <text x="0" y="18" font-family="'SF Pro Text', system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" letter-spacing="1.5" font-weight="500">TESTS PASSING</text>
+  </g>
+
+  <!-- Divider 3 -->
+  <line x1="710" y1="278" x2="710" y2="322" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Stat 4: Examples -->
+  <g transform="translate(810, 295)">
+    <text x="0" y="0" font-family="'SF Pro Display', system-ui, sans-serif" font-size="22" font-weight="700" fill="#f59e0b" text-anchor="middle">100+</text>
+    <text x="0" y="18" font-family="'SF Pro Text', system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" letter-spacing="1.5" font-weight="500">EXAMPLES</text>
+  </g>
+
+  <!-- Divider 4 -->
+  <line x1="930" y1="278" x2="930" y2="322" stroke="#1e293b" stroke-width="1"/>
+
+  <!-- Stat 5: AI Clients -->
+  <g transform="translate(1030, 295)">
+    <text x="0" y="0" font-family="'SF Pro Display', system-ui, sans-serif" font-size="22" font-weight="700" fill="#fb7185" text-anchor="middle">6</text>
+    <text x="0" y="18" font-family="'SF Pro Text', system-ui, sans-serif" font-size="11" fill="#64748b" text-anchor="middle" letter-spacing="1.5" font-weight="500">AI CLIENTS</text>
+  </g>
+
+  <!-- Bottom accent bar -->
+  <rect x="0" y="337" width="1200" height="3" fill="url(#accentGrad)" rx="0" opacity="0.5"/>
+</svg>
