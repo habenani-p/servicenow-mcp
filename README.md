@@ -38,7 +38,7 @@ with seamless, production-ready integration across all major AI providers and SD
 
 ### Any AI Provider or SDK
 
-Works out of the box with **Claude**, **GPT-4o**, **Gemini / Vertex AI**, **Cursor**, **VS Code Copilot**, and **OpenAI Codex**. OAuth 2.0 and Basic Auth supported for every client. Role-based tool packages let you expose exactly the right tools per persona.
+Works out of the box with every major AI interface — **Claude**, **ChatGPT**, **Gemini**, **Grok**, **Cursor**, **Windsurf**, **GitHub Copilot**, **Continue**, **Cline**, **Amazon Q**, **JetBrains AI**, **Zed**, **Ollama**, and more. No model-version lock-in. OAuth 2.0 and Basic Auth supported for every client. Role-based tool packages let you expose exactly the right tools per persona.
 
 </td>
 <td width="33%" valign="top">
@@ -368,14 +368,22 @@ docker run -e SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com \
 
 ## Supported AI Clients
 
-| Client | Auth Methods | Config Guide |
-|--------|-------------|-------------|
-| Claude Desktop | Basic, OAuth 2.0 | [clients/claude-desktop/SETUP.md](clients/claude-desktop/SETUP.md) |
-| Claude Code | Basic, OAuth 2.0 | [clients/claude-code/SETUP.md](clients/claude-code/SETUP.md) |
-| Cursor | Basic, OAuth 2.0 | [clients/cursor/SETUP.md](clients/cursor/SETUP.md) |
-| VS Code (Copilot) | Basic, OAuth 2.0 | [clients/vscode/SETUP.md](clients/vscode/SETUP.md) |
-| OpenAI Codex | Basic, OAuth 2.0 | [clients/codex/SETUP.md](clients/codex/SETUP.md) |
-| Google Gemini / Vertex AI | Basic, OAuth 2.0 | [clients/gemini/SETUP.md](clients/gemini/SETUP.md) |
+| Client | Type | Auth Methods | Config Guide |
+|--------|------|-------------|-------------|
+| Claude Desktop | Desktop app | Basic, OAuth 2.0 | [clients/claude-desktop/SETUP.md](clients/claude-desktop/SETUP.md) |
+| Claude Code | CLI | Basic, OAuth 2.0 | [clients/claude-code/SETUP.md](clients/claude-code/SETUP.md) |
+| ChatGPT / OpenAI | API / Web | Basic, OAuth 2.0 | [clients/openai/SETUP.md](clients/openai/SETUP.md) |
+| Gemini / Vertex AI | API / CLI | Basic, OAuth 2.0 | [clients/gemini/SETUP.md](clients/gemini/SETUP.md) |
+| Grok (xAI) | API / Web | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Cursor | AI code editor | Basic, OAuth 2.0 | [clients/cursor/SETUP.md](clients/cursor/SETUP.md) |
+| Windsurf (Codeium) | AI code editor | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| GitHub Copilot (VS Code) | IDE extension | Basic, OAuth 2.0 | [clients/vscode/SETUP.md](clients/vscode/SETUP.md) |
+| Continue.dev | VS Code / JetBrains | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Cline | VS Code extension | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Amazon Q Developer | IDE / CLI | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| JetBrains AI Assistant | IDE plugin | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Zed | AI editor | Basic, OAuth 2.0 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
+| Ollama (local models) | Local runtime | Basic | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) |
 
 ---
 
