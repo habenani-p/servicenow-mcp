@@ -1,7 +1,7 @@
 {
   "name": "now-ai-kit",
   "version": "2.0.0",
-  "description": "The most advanced & comprehensive ServiceNow MCP server — 150+ tools across 17 modules, full Zurich API coverage, integrates with Claude, GPT-4o, Gemini, Cursor, VS Code, and Codex",
+  "description": "The most advanced & comprehensive ServiceNow MCP server — 150+ tools across 17 modules, full ServiceNow API coverage, integrates with Claude, GPT-4o, Gemini, Cursor, VS Code, and Codex",
   "main": "dist/server.js",
   "type": "module",
   "engines": {
@@ -33,7 +33,7 @@
     "now-assist",
     "atf",
     "flow-designer",
-    "zurich",
+    
     "ai",
     "llm",
     "claude",

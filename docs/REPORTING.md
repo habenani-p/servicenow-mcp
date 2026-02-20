@@ -1,4 +1,4 @@
-# Reporting & Analytics Guide (Zurich Release)
+# Reporting & Analytics Guide (Latest Release)
 
 This guide covers the 8 reporting and analytics tools. All are read-only and require no special flags beyond read access.
 
@@ -58,13 +58,13 @@ get_performance_analytics:
   time_range: last_30_days
 ```
 
-Uses the Zurich Performance Analytics API: `GET /api/now/pa/widget/{sys_id}`
+Uses the ServiceNow Performance Analytics API: `GET /api/now/pa/widget/{sys_id}`
 
-## Zurich Reporting APIs
+## Latest Reporting APIs
 
 | API | Endpoint | Notes |
 |-----|----------|-------|
 | Stats (Aggregate) | `GET /api/now/stats/{table}` | GROUP BY, SUM, COUNT, AVG |
 | Performance Analytics | `GET /api/now/pa/widget/{sys_id}` | PA scorecard data |
-| Reporting | `GET /api/now/reporting` | Saved report search (Zurich) |
+| Reporting | `GET /api/now/reporting` | Saved report search (latest release) |
 | Table (for sys_report) | `GET /api/now/table/sys_report` | Report definitions |

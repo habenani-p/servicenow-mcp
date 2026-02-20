@@ -83,11 +83,11 @@ create_incident ... instance=dev
 - Write operations to non-default instances require `MULTI_INSTANCE_WRITE=true`
 - The `instances.example.json` committed to the repo contains no real credentials
 
-## Zurich ReleaseOps
+## Latest ReleaseOps
 
-ServiceNow Zurich introduces ReleaseOps for managing deployments across instances. Tools:
+ServiceNow ReleaseOps for managing deployments across instances. Tools:
 
 - `list_releaseops_deployments` — List deployment pipelines
 - `get_releaseops_status(deployment_sys_id)` — Get pipeline status and quality gate results
 
-These map to the `sys_deployment` table introduced in Zurich.
+These map to the `sys_deployment` table available in the latest release.

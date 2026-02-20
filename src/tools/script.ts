@@ -1,8 +1,8 @@
 /**
- * Scripting Management tools — Zurich (ES2021/ES12 support).
+ * Scripting Management tools — latest release (ES2021/ES12 support).
  * All tools require SCRIPTING_ENABLED=true (Tier 3).
- * Note: Zurich supports Promises, async/await, optional chaining.
- * GlideEncrypter is deprecated in Zurich.
+ * Note: ServiceNow supports Promises, async/await, optional chaining.
+ * GlideEncrypter is deprecated in recent releases.
  */
 import type { ServiceNowClient } from '../servicenow/client.js';
 import { ServiceNowError } from '../utils/errors.js';
@@ -36,14 +36,14 @@ export function getScriptToolDefinitions() {
     },
     {
       name: 'create_business_rule',
-      description: 'Create a new business rule (requires SCRIPTING_ENABLED=true). Zurich supports ES2021 async/await in scripts.',
+      description: 'Create a new business rule (requires SCRIPTING_ENABLED=true). ServiceNow supports ES2021 async/await in scripts.',
       inputSchema: {
         type: 'object',
         properties: {
           name: { type: 'string', description: 'Rule name' },
           table: { type: 'string', description: 'Table this rule applies to' },
           when: { type: 'string', description: '"before" | "after" | "async" | "display"' },
-          script: { type: 'string', description: 'Server-side JavaScript. Zurich supports ES2021 (async/await, ?., ??).' },
+          script: { type: 'string', description: 'Server-side JavaScript. ServiceNow supports ES2021 (async/await, ?., ??).' },
           condition: { type: 'string', description: 'Optional condition script' },
           active: { type: 'boolean', description: 'Whether to activate the rule (default: true)' },
           order: { type: 'number', description: 'Execution order (default: 100)' },
@@ -94,7 +94,7 @@ export function getScriptToolDefinitions() {
         type: 'object',
         properties: {
           name: { type: 'string', description: 'Script include name' },
-          script: { type: 'string', description: 'Script body (class definition). Zurich supports ES2021.' },
+          script: { type: 'string', description: 'Script body (class definition). ServiceNow supports ES2021.' },
           api_name: { type: 'string', description: 'API name used to call this from other scripts' },
           access: { type: 'string', description: '"public" or "package_private" (default: "public")' },
           active: { type: 'boolean', description: 'Whether to activate (default: true)' },
@@ -200,7 +200,7 @@ export async function executeScriptToolCall(
       if (args.active !== undefined) query = `active=${args.active}`;
       if (args.table) query = query ? `${query}^collection=${args.table}` : `collection=${args.table}`;
       const resp = await client.queryRecords({ table: 'sys_script', query: query || undefined, limit: args.limit || 20, fields: 'sys_id,name,collection,when,active,order,sys_updated_on' });
-      return { count: resp.count, business_rules: resp.records, zurich_note: 'Zurich supports ES2021 (async/await, ?., ??) in script bodies' };
+      return { count: resp.count, business_rules: resp.records, note: 'ServiceNow supports ES2021 (async/await, ?., ??) in script bodies' };
     }
     case 'get_business_rule': {
       if (!args.sys_id) throw new ServiceNowError('sys_id is required', 'INVALID_REQUEST');
@@ -211,7 +211,7 @@ export async function executeScriptToolCall(
         throw new ServiceNowError('name, table, when, and script are required', 'INVALID_REQUEST');
       const data = { name: args.name, collection: args.table, when: args.when, script: args.script, condition: args.condition, active: args.active !== false, order: args.order || 100 };
       const result = await client.createRecord('sys_script', data);
-      return { ...result, summary: `Created business rule ${args.name}`, zurich_note: 'GlideEncrypter is deprecated in Zurich; use new sn_si.Vault or keystore APIs instead' };
+      return { ...result, summary: `Created business rule ${args.name}`, note: 'GlideEncrypter is deprecated in recent releases; use new sn_si.Vault or keystore APIs instead' };
     }
     case 'update_business_rule': {
       if (!args.sys_id || !args.fields) throw new ServiceNowError('sys_id and fields are required', 'INVALID_REQUEST');
@@ -238,7 +238,7 @@ export async function executeScriptToolCall(
       if (!args.name || !args.script) throw new ServiceNowError('name and script are required', 'INVALID_REQUEST');
       const data = { name: args.name, script: args.script, api_name: args.api_name || args.name, access: args.access || 'public', active: args.active !== false };
       const result = await client.createRecord('sys_script_include', data);
-      return { ...result, summary: `Created script include ${args.name}`, zurich_note: 'ES2021 (async/await, ?., ??) supported in Zurich' };
+      return { ...result, summary: `Created script include ${args.name}`, note: 'ES2021 (async/await, ?., ??) supported in the latest release' };
     }
     case 'update_script_include': {
       if (!args.sys_id || !args.fields) throw new ServiceNowError('sys_id and fields are required', 'INVALID_REQUEST');
@@ -260,7 +260,7 @@ export async function executeScriptToolCall(
       let query = '';
       if (args.state) query = `state=${args.state}`;
       const resp = await client.queryRecords({ table: 'sys_update_set', query: query || undefined, limit: args.limit || 20, fields: 'sys_id,name,state,description,application,sys_updated_on' });
-      return { count: resp.count, changesets: resp.records, zurich_note: 'Zurich ReleaseOps provides automated deployment pipelines for changesets' };
+      return { count: resp.count, changesets: resp.records, note: 'Latest ReleaseOps provides automated deployment pipelines for changesets' };
     }
     case 'get_changeset': {
       if (!args.sys_id_or_name) throw new ServiceNowError('sys_id_or_name is required', 'INVALID_REQUEST');

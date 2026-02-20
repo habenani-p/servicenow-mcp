@@ -1,4 +1,4 @@
-# ATF Testing Guide (Zurich Release)
+# ATF Testing Guide (Latest Release)
 
 This guide covers the 9 Automated Test Framework (ATF) tools available when `ATF_ENABLED=true`.
 
@@ -21,7 +21,7 @@ WRITE_ENABLED=true  # Required for running tests (write operations)
 | `run_atf_test` | ATF_ENABLED | Execute a single test |
 | `get_atf_suite_result` | Read | Get suite run results |
 | `list_atf_test_results` | Read | List test results |
-| `get_atf_failure_insight` | Read | **Zurich**: Failure Insight analysis |
+| `get_atf_failure_insight` | Read | **Latest**: Failure Insight analysis |
 
 ## Common Workflows
 
@@ -39,14 +39,14 @@ WRITE_ENABLED=true  # Required for running tests (write operations)
    → get_atf_suite_result result_sys_id="abc123"
    → Returns: {status: "complete", passed: 47, failed: 2}
 
-4. Investigate failures (Zurich Failure Insight)
+4. Investigate failures (ATF Failure Insight)
    → get_atf_failure_insight result_sys_id="abc123"
    → Returns: changes between last pass and this failure
 ```
 
-### Zurich Failure Insight
+### ATF Failure Insight
 
-`get_atf_failure_insight` is a Zurich-exclusive tool that compares metadata between the last successful ATF run and the current failed run. It surfaces:
+`get_atf_failure_insight` is a latest release tool that compares metadata between the last successful ATF run and the current failed run. It surfaces:
 
 - User role changes (a role was added/removed from the ATF user)
 - Field value changes on records referenced by tests
@@ -75,7 +75,7 @@ WRITE_ENABLED=true  # Required for running tests (write operations)
 
 API: `GET /api/now/table/sys_atf_failure_insight`
 
-## ServiceNow ATF APIs (Zurich)
+## ServiceNow ATF APIs
 
 | API | Endpoint |
 |-----|----------|

@@ -1,7 +1,7 @@
 /**
- * Reporting & Analytics tools — Zurich Reporting API.
+ * Reporting & Analytics tools — ServiceNow Reporting API.
  * All tools are Tier 0 (read-only) unless noted.
- * Zurich API: GET /api/now/reporting, /api/now/stats/{table}, /api/now/pa/widget/{sys_id}
+ * ServiceNow API: GET /api/now/reporting, /api/now/stats/{table}, /api/now/pa/widget/{sys_id}
  */
 import type { ServiceNowClient } from '../servicenow/client.js';
 import { ServiceNowError } from '../utils/errors.js';
@@ -10,7 +10,7 @@ export function getReportingToolDefinitions() {
   return [
     {
       name: 'list_reports',
-      description: 'List saved reports in the instance (Zurich: /api/now/reporting)',
+      description: 'List saved reports in the instance (latest release: /api/now/reporting)',
       inputSchema: {
         type: 'object',
         properties: {
@@ -34,7 +34,7 @@ export function getReportingToolDefinitions() {
     },
     {
       name: 'run_aggregate_query',
-      description: 'Run a grouped aggregate (COUNT, SUM, AVG) query on any table (Zurich: /api/now/stats/{table})',
+      description: 'Run a grouped aggregate (COUNT, SUM, AVG) query on any table (latest release: /api/now/stats/{table})',
       inputSchema: {
         type: 'object',
         properties: {
@@ -64,7 +64,7 @@ export function getReportingToolDefinitions() {
     },
     {
       name: 'get_performance_analytics',
-      description: 'Get Performance Analytics widget data (requires PA plugin; Zurich: /api/now/pa/widget/{sys_id})',
+      description: 'Get Performance Analytics widget data (requires PA plugin; latest release: /api/now/pa/widget/{sys_id})',
       inputSchema: {
         type: 'object',
         properties: {
@@ -123,7 +123,7 @@ export async function executeReportingToolCall(
 ): Promise<any> {
   switch (name) {
     case 'list_reports': {
-      // Zurich: /api/now/reporting supports sysparm_contains for name search
+      // Latest release: /api/now/reporting supports sysparm_contains for name search
       let query = '';
       if (args.search) query = `nameLIKE${args.search}`;
       if (args.category) query = query ? `${query}^categoryLIKE${args.category}` : `categoryLIKE${args.category}`;
@@ -167,7 +167,7 @@ export async function executeReportingToolCall(
     }
     case 'get_performance_analytics': {
       if (!args.widget_sys_id) throw new ServiceNowError('widget_sys_id is required', 'INVALID_REQUEST');
-      // Zurich PA API: GET /api/now/pa/widget/{sys_id}
+      // ServiceNow PA API: GET /api/now/pa/widget/{sys_id}
       try {
         const result = await client.callNowAssist(`/api/now/pa/widget/${args.widget_sys_id}`, {});
         return { widget_sys_id: args.widget_sys_id, data: result };

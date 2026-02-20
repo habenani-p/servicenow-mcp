@@ -8,13 +8,13 @@
 [![GitHub Forks](https://img.shields.io/github/forks/habenani-p/servicenow-mcp?style=flat-square&color=0ea5e9&label=forks)](https://github.com/habenani-p/servicenow-mcp/network/members)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![License: MIT](https://img.shields.io/badge/license-MIT-f59e0b?style=flat-square)](LICENSE)
-[![ServiceNow](https://img.shields.io/badge/ServiceNow-Zurich%202025-00c7b4?style=flat-square)](https://developer.servicenow.com)
+[![ServiceNow](https://img.shields.io/badge/ServiceNow-Latest%20Release-00c7b4?style=flat-square)](https://developer.servicenow.com)
 [![MCP](https://img.shields.io/badge/MCP-Model%20Context%20Protocol-8b5cf6?style=flat-square)](https://modelcontextprotocol.io)
 
 <br/>
 
 **now-ai-kit** is the most advanced, comprehensive, and thoroughly tested ServiceNow MCP server available.
-It provides complete coverage across all major ServiceNow modules using the latest Zurich API references,
+It provides complete coverage across all major ServiceNow modules using the latest ServiceNow API references,
 with seamless, production-ready integration across all major AI providers and SDKs.
 
 <br/>
@@ -68,7 +68,7 @@ Ten pre-built persona packages — service desk, change coordinator, platform de
 
 ### Production-Ready from Day One
 
-Full TypeScript types, 100+ real-world examples, complete reference documentation across 8 guides, and per-client setup guides for all six AI clients. Built on the latest ServiceNow Zurich release APIs with OAuth 2.0 for every integration.
+Full TypeScript types, 100+ real-world examples, complete reference documentation across 8 guides, and per-client setup guides for all six AI clients. Built on the latest ServiceNow latest release APIs with OAuth 2.0 for every integration.
 
 </td>
 </tr>
@@ -108,7 +108,7 @@ Full TypeScript types, 100+ real-world examples, complete reference documentatio
 | Service Catalog & Approvals | Catalog browsing, order items, SLA tracking, approval workflows |
 | User & Group Management | Users, groups, membership, role assignments |
 | Reporting & Analytics | Aggregate queries, trend analysis, Performance Analytics, scheduled jobs |
-| ATF Testing | Test suites, test execution, Zurich Failure Insight |
+| ATF Testing | Test suites, test execution, ATF Failure Insight |
 | Now Assist / AI | NLQ, AI Search, summaries, resolution suggestions, Agentic Playbooks |
 | Scripting | Business rules, script includes, client scripts, changesets |
 | Agile / Scrum | Stories, epics, sprints, scrum tasks |
@@ -289,7 +289,7 @@ Create an incident for a VPN outage affecting the London office, high urgency, a
 What CMDB CIs does the ERP application depend on?
 ```
 ```
-Run the Regression Test Suite and show me any failures with Zurich Failure Insight details.
+Run the Regression Test Suite and show me any failures with ATF Failure Insight details.
 ```
 ```
 Summarise the last 30 days of incident trends by category.
@@ -388,8 +388,8 @@ docker run -e SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com \
 - **Flow Designer** — List, inspect, trigger, and monitor flows and subflows
 - **OAuth 2.0** for all six AI clients
 - **Role-based tool packages** — 10 persona-specific packages
-- **Now Assist Agentic Playbooks** — Zurich release AI automation
-- **ATF Failure Insight** — Zurich-release test failure diagnostics
+- **Now Assist Agentic Playbooks** — latest release AI automation
+- **ATF Failure Insight** — latest release test failure diagnostics
 - **61 unit tests** covering all permission tiers, routing, and domain handlers
 - **Complete documentation** — 8 reference guides in `docs/`
 
@@ -403,7 +403,7 @@ docker run -e SERVICENOW_INSTANCE_URL=https://yourinstance.service-now.com \
 | [docs/CLIENT_SETUP.md](docs/CLIENT_SETUP.md) | Step-by-step setup for all six AI clients, both Basic Auth and OAuth 2.0 |
 | [docs/TOOL_PACKAGES.md](docs/TOOL_PACKAGES.md) | Role-based package reference — which tools each persona package includes |
 | [docs/NOW_ASSIST.md](docs/NOW_ASSIST.md) | Now Assist and AI integration guide — NLQ, AI Search, Agentic Playbooks |
-| [docs/ATF.md](docs/ATF.md) | ATF testing guide — suites, test runs, Zurich Failure Insight |
+| [docs/ATF.md](docs/ATF.md) | ATF testing guide — suites, test runs, ATF Failure Insight |
 | [docs/SCRIPTING.md](docs/SCRIPTING.md) | Scripting management — business rules, script includes, changesets |
 | [docs/REPORTING.md](docs/REPORTING.md) | Reporting and analytics — aggregate queries, Performance Analytics |
 | [docs/MULTI_INSTANCE.md](docs/MULTI_INSTANCE.md) | Multi-instance configuration via `instances.json` or environment variables |

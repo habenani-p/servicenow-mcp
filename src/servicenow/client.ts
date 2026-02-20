@@ -754,7 +754,7 @@ export class ServiceNowClient {
   }
 
   /**
-   * Call Now Assist / Generative AI endpoints (Zurich)
+   * Call Now Assist / Generative AI endpoints (latest release)
    */
   async callNowAssist(endpoint: string, payload: Record<string, any>): Promise<any> {
     await this.authenticate();
@@ -776,7 +776,7 @@ export class ServiceNowClient {
   }
 
   /**
-   * Run aggregate/stats query on a table (Zurich Reporting API)
+   * Run aggregate/stats query on a table (ServiceNow Reporting API)
    */
   async runAggregateQuery(table: string, groupBy: string, _aggregate: string = 'COUNT', query?: string): Promise<any> {
     await this.authenticate();

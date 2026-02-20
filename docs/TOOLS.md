@@ -1,4 +1,4 @@
-# Tool Reference — ServiceNow MCP Server (Zurich Release)
+# Tool Reference — ServiceNow MCP Server (Latest Release)
 
 Complete reference for all 112 tools. All tools accept a `table` parameter override where applicable.
 
@@ -505,7 +505,7 @@ Query record counts over time periods (monthly buckets).
 - `periods` — Number of months to include (default: 6)
 
 ### get_performance_analytics
-Get Performance Analytics widget data (Zurich PA API).
+Get Performance Analytics widget data (ServiceNow PA API).
 
 **Parameters**:
 - `widget_sys_id` (required) — PA widget sys_id
@@ -593,7 +593,7 @@ List individual test results within a suite run.
 - `limit`
 
 ### get_atf_failure_insight
-**Zurich-specific**: Get Failure Insight report showing metadata changes between the last successful and failed run — surfaces role changes and field value changes that caused test failures.
+**Latest release**: Get Failure Insight report showing metadata changes between the last successful and failed run — surfaces role changes and field value changes that caused test failures.
 
 **Parameters**:
 - `result_sys_id` (required)
@@ -610,7 +610,7 @@ Send a natural language question and get structured query results.
 - `table` — Scope to a specific table
 
 ### ai_search
-Semantic AI search across knowledge, catalog, and records (Zurich AI Search API).
+Semantic AI search across knowledge, catalog, and records (ServiceNow AI Search API).
 
 **Parameters**:
 - `query` (required)
@@ -651,19 +651,19 @@ List Virtual Agent topics.
 - `limit`
 
 ### trigger_agentic_playbook
-**Zurich-specific**: Invoke a Now Assist Agentic Playbook. **[NOW_ASSIST_ENABLED]**
+**Latest release**: Invoke a Now Assist Agentic Playbook. **[NOW_ASSIST_ENABLED]**
 
 **Parameters**:
 - `playbook_sys_id` (required)
 - `context` — Key/value context object
 
 ### get_ms_copilot_topics
-**Zurich-specific**: List topics exposed to Microsoft Copilot 365.
+**Latest release**: List topics exposed to Microsoft Copilot 365.
 
 **Parameters**: None
 
 ### get_virtual_agent_stream
-**Zurich-specific**: Get streaming Virtual Agent response.
+**Latest release**: Get streaming Virtual Agent response.
 
 **Parameters**:
 - `topic_sys_id` (required)

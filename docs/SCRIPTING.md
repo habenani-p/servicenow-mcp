@@ -1,4 +1,4 @@
-# Scripting Management Guide (Zurich Release)
+# Scripting Management Guide (Latest Release)
 
 This guide covers the 16 scripting tools available when `SCRIPTING_ENABLED=true`. These tools provide direct access to business rules, script includes, client scripts, and changeset management.
 
@@ -18,19 +18,19 @@ SCRIPTING_ENABLED=true
 | Client Scripts | list, get, create, update | `sys_script_client` |
 | Changesets | list, get, commit, publish | `sys_update_set` |
 
-## Zurich Scripting Notes
+## Latest Release Scripting Notes
 
 ### ES2021 Support
-ServiceNow Zurich fully supports ES2021 (ES12) features in server-side scripts:
+ServiceNow fully supports ES2021 (ES12) features in server-side scripts:
 - `async`/`await` in business rules and script includes
 - Optional chaining (`?.`)
 - Nullish coalescing (`??`)
 - Promise-based patterns
 
 ### GlideEncrypter Deprecation
-`GlideEncrypter` is deprecated in Zurich. Use `GlideEncryptionUtils` instead:
+`GlideEncrypter` is deprecated in recent releases. Use `GlideEncryptionUtils` instead:
 ```javascript
-// Deprecated (Zurich)
+// Deprecated (recent releases)
 var enc = new GlideEncrypter();
 
 // Recommended

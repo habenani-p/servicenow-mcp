@@ -1,15 +1,15 @@
 /**
- * Now Assist & ServiceNow AI tools — Zurich release.
+ * Now Assist & ServiceNow AI tools — latest release.
  * All tools require NOW_ASSIST_ENABLED=true (Tier AI).
  *
- * Zurich APIs used:
+ * ServiceNow APIs used:
  *   - Now Assist Skills: POST /api/sn_assist/skill/invoke
- *   - Agentic Playbooks:  POST /api/sn_assist/playbook/trigger  (NEW Zurich)
+ *   - Agentic Playbooks:  POST /api/sn_assist/playbook/trigger  
  *   - AI Search:          GET  /api/now/ai_search/search
- *   - Predictive Intel.:  POST /api/sn_ml/solution/{id}/predict (LightGBM in Zurich)
+ *   - Predictive Intel.:  POST /api/sn_ml/solution/{id}/predict (LightGBM in latest release)
  *   - NLQ:               POST /api/sn_nl_text_to_value/text_query
- *   - Virtual Agent:      GET  /api/sn_cs/topic               (streaming in Zurich)
- *   - MS Copilot 365:     GET  /api/sn_assist/copilot/topics   (NEW Zurich)
+ *   - Virtual Agent:      GET  /api/sn_cs/topic               (streaming in latest release)
+ *   - MS Copilot 365:     GET  /api/sn_assist/copilot/topics   
  */
 import type { ServiceNowClient } from '../servicenow/client.js';
 import { ServiceNowError } from '../utils/errors.js';
@@ -19,7 +19,7 @@ export function getNowAssistToolDefinitions() {
   return [
     {
       name: 'nlq_query',
-      description: 'Ask a natural language question and get structured ServiceNow data (Zurich NLQ API)',
+      description: 'Ask a natural language question and get structured ServiceNow data (ServiceNow NLQ API)',
       inputSchema: {
         type: 'object',
         properties: {
@@ -32,7 +32,7 @@ export function getNowAssistToolDefinitions() {
     },
     {
       name: 'ai_search',
-      description: 'Semantic AI-powered search across KB, catalog, incidents (Zurich AI Search)',
+      description: 'Semantic AI-powered search across KB, catalog, incidents (ServiceNow AI Search)',
       inputSchema: {
         type: 'object',
         properties: {
@@ -45,7 +45,7 @@ export function getNowAssistToolDefinitions() {
     },
     {
       name: 'generate_summary',
-      description: 'Generate an AI summary of any record using Now Assist (Zurich: sn_assist/skill/summarize)',
+      description: 'Generate an AI summary of any record using Now Assist (latest release: sn_assist/skill/summarize)',
       inputSchema: {
         type: 'object',
         properties: {
@@ -68,7 +68,7 @@ export function getNowAssistToolDefinitions() {
     },
     {
       name: 'categorize_incident',
-      description: 'Use Predictive Intelligence to predict category, assignment group, and priority (Zurich: LightGBM algorithm)',
+      description: 'Use Predictive Intelligence to predict category, assignment group, and priority (latest release: LightGBM algorithm)',
       inputSchema: {
         type: 'object',
         properties: {
@@ -80,7 +80,7 @@ export function getNowAssistToolDefinitions() {
     },
     {
       name: 'get_virtual_agent_topics',
-      description: 'List Virtual Agent topics available in the instance (Zurich: streaming VA API)',
+      description: 'List Virtual Agent topics available in the instance (latest release: streaming VA API)',
       inputSchema: {
         type: 'object',
         properties: {
@@ -93,7 +93,7 @@ export function getNowAssistToolDefinitions() {
     },
     {
       name: 'trigger_agentic_playbook',
-      description: 'Invoke a Zurich Agentic Playbook — context-aware AI agents that complete tasks autonomously (NEW Zurich)',
+      description: 'Invoke an Agentic Playbook — context-aware AI agents that complete tasks autonomously ',
       inputSchema: {
         type: 'object',
         properties: {
@@ -105,7 +105,7 @@ export function getNowAssistToolDefinitions() {
     },
     {
       name: 'get_ms_copilot_topics',
-      description: 'List VA topics exposed to Microsoft Copilot 365 via Custom Engine Agent integration (NEW Zurich)',
+      description: 'List VA topics exposed to Microsoft Copilot 365 via Custom Engine Agent integration ',
       inputSchema: {
         type: 'object',
         properties: {
@@ -149,7 +149,7 @@ export async function executeNowAssistToolCall(
   switch (name) {
     case 'nlq_query': {
       if (!args.question) throw new ServiceNowError('question is required', 'INVALID_REQUEST');
-      // Zurich NLQ API: POST /api/sn_nl_text_to_value/text_query
+      // ServiceNow NLQ API: POST /api/sn_nl_text_to_value/text_query
       const result = await client.callNowAssist('/api/sn_nl_text_to_value/text_query', {
         question: args.question,
         table: args.table,
@@ -159,7 +159,7 @@ export async function executeNowAssistToolCall(
     }
     case 'ai_search': {
       if (!args.query) throw new ServiceNowError('query is required', 'INVALID_REQUEST');
-      // Zurich AI Search API: GET /api/now/ai_search/search
+      // ServiceNow AI Search API: GET /api/now/ai_search/search
       const params = new URLSearchParams({ q: args.query, limit: String(args.limit || 10) });
       if (args.sources) params.set('sources', args.sources.join(','));
       const result = await client.callNowAssist(`/api/now/ai_search/search?${params.toString()}`, {});
@@ -167,7 +167,7 @@ export async function executeNowAssistToolCall(
     }
     case 'generate_summary': {
       if (!args.table || !args.sys_id) throw new ServiceNowError('table and sys_id are required', 'INVALID_REQUEST');
-      // Zurich Now Assist Skill: POST /api/sn_assist/skill/invoke
+      // Now Assist Skill: POST /api/sn_assist/skill/invoke
       const result = await client.callNowAssist('/api/sn_assist/skill/invoke', {
         skill: 'summarize',
         input: { table: args.table, sys_id: args.sys_id },
@@ -184,7 +184,7 @@ export async function executeNowAssistToolCall(
     }
     case 'categorize_incident': {
       if (!args.short_description) throw new ServiceNowError('short_description is required', 'INVALID_REQUEST');
-      // Zurich Predictive Intelligence ML API: POST /api/sn_ml/solution/{id}/predict
+      // Predictive Intelligence ML API: POST /api/sn_ml/solution/{id}/predict
       // Get available PI solutions first then predict
       const piResp = await client.queryRecords({ table: 'ml_solution', query: 'active=true^table_name=incident', limit: 1, fields: 'sys_id,name' });
       if (piResp.count === 0) {
@@ -195,29 +195,29 @@ export async function executeNowAssistToolCall(
         short_description: args.short_description,
         description: args.description,
       });
-      return { short_description: args.short_description, prediction: result, algorithm_note: 'LightGBM available in Zurich release' };
+      return { short_description: args.short_description, prediction: result, algorithm_note: 'LightGBM available in latest release' };
     }
     case 'get_virtual_agent_topics': {
-      // Zurich VA API: GET /api/sn_cs/topic (streaming support added)
+      // VA API: GET /api/sn_cs/topic (streaming support added)
       let query = '';
       if (args.active !== false) query = 'active=true';
       if (args.category) query = query ? `${query}^category.title=${args.category}` : `category.title=${args.category}`;
       const resp = await client.queryRecords({ table: 'sys_cs_topic', query: query || undefined, limit: args.limit || 20, fields: 'sys_id,name,active,category,description' });
-      return { count: resp.count, topics: resp.records, note: 'Zurich: VA supports streaming responses and Google Chat v2.0' };
+      return { count: resp.count, topics: resp.records, note: 'ServiceNow VA supports streaming responses and Google Chat v2.0' };
     }
     case 'trigger_agentic_playbook': {
       if (!args.playbook_sys_id) throw new ServiceNowError('playbook_sys_id is required', 'INVALID_REQUEST');
-      // Zurich NEW: Agentic Playbooks API
+      // Agentic Playbooks API
       const result = await client.callNowAssist('/api/sn_assist/playbook/trigger', {
         playbook_sys_id: args.playbook_sys_id,
         context: args.context || {},
       });
-      return { playbook_sys_id: args.playbook_sys_id, result, note: 'Agentic Playbooks are a Zurich release feature' };
+      return { playbook_sys_id: args.playbook_sys_id, result, note: 'Agentic Playbooks are a latest release feature' };
     }
     case 'get_ms_copilot_topics': {
-      // Zurich NEW: MS Copilot 365 Custom Engine Agent
+      // MS Copilot 365 Custom Engine Agent
       const result = await client.callNowAssist('/api/sn_assist/copilot/topics', {});
-      return { topics: result, note: 'Microsoft Copilot 365 integration (Custom Engine Agent) is a Zurich release feature' };
+      return { topics: result, note: 'Microsoft Copilot 365 integration (Custom Engine Agent) is a latest release feature' };
     }
     case 'generate_work_notes': {
       if (!args.table || !args.sys_id) throw new ServiceNowError('table and sys_id are required', 'INVALID_REQUEST');
@@ -229,7 +229,7 @@ export async function executeNowAssistToolCall(
     }
     case 'get_pi_models': {
       const resp = await client.queryRecords({ table: 'ml_solution', query: 'active=true', limit: 20, fields: 'sys_id,name,table_name,type,active,sys_updated_on' });
-      return { count: resp.count, models: resp.records, note: 'Zurich Predictive Intelligence supports LightGBM, Feed Forward Neural Net, and XGBoost' };
+      return { count: resp.count, models: resp.records, note: 'Predictive Intelligence supports LightGBM, Feed Forward Neural Net, and XGBoost' };
     }
     default:
       return null;

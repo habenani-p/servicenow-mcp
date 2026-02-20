@@ -33,7 +33,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - **Scripting** (16 tools): Business rules, script includes, client scripts, changesets (full CRUD)
 - **Agile / Scrum** (9 tools): Stories, epics, scrum tasks (full CRUD)
 
-#### Zurich Release API Support
+#### Latest Release API Support
 - Now Assist Agentic Playbooks (`POST /api/sn_assist/playbook/trigger`)
 - ATF Failure Insight (`GET /api/now/table/sys_atf_failure_insight`)
 - AI Search (`GET /api/now/ai_search/search`)
@@ -66,7 +66,7 @@ The format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and
 - `docs/CLIENT_SETUP.md` — unified setup guide for all 6 AI clients
 - `docs/NOW_ASSIST.md` — Now Assist / AI integration guide
 - `docs/ATF.md` — ATF testing guide with Failure Insight walkthrough
-- `docs/SCRIPTING.md` — scripting management guide with Zurich notes
+- `docs/SCRIPTING.md` — scripting management guide with latest release notes
 - `docs/REPORTING.md` — reporting and analytics guide
 - `docs/MULTI_INSTANCE.md` — multi-instance setup guide
 - Per-client `SETUP.md` in each `clients/*/` directory
