@@ -1,321 +1,143 @@
+/**
+ * Tool Router — aggregates all domain tool modules and implements the
+ * MCP_TOOL_PACKAGE role-based packaging system.
+ *
+ * Tool packages (set via MCP_TOOL_PACKAGE env var):
+ *   full (default), service_desk, change_coordinator, knowledge_author,
+ *   catalog_builder, system_administrator, platform_developer, itom_engineer,
+ *   agile_manager, ai_developer
+ */
 import type { ServiceNowClient } from '../servicenow/client.js';
-import type {
-  QueryRecordsParams,
-  GetRecordParams,
-  GetUserParams,
-  GetGroupParams,
-  SearchCmdbCiParams,
-  GetCmdbCiParams,
-  ListRelationshipsParams,
-  ListDiscoverySchedulesParams,
-  ListMidServersParams,
-  ListActiveEventsParams,
-  ServiceMappingSummaryParams,
-  CreateChangeRequestParams,
-  NaturalLanguageSearchParams,
-  NaturalLanguageUpdateParams,
-} from '../servicenow/types.js';
 import { ServiceNowError } from '../utils/errors.js';
 
+// Core (existing 15 tools)
+import { getCoreToolDefinitions, executeCoreToolCall } from './core.js';
+// ITSM
+import { getIncidentToolDefinitions, executeIncidentToolCall } from './incident.js';
+import { getProblemToolDefinitions, executeProblemToolCall } from './problem.js';
+import { getChangeToolDefinitions, executeChangeToolCall } from './change.js';
+import { getTaskToolDefinitions, executeTaskToolCall } from './task.js';
+// Service Management
+import { getKnowledgeToolDefinitions, executeKnowledgeToolCall } from './knowledge.js';
+import { getCatalogToolDefinitions, executeCatalogToolCall } from './catalog.js';
+// User / Group
+import { getUserToolDefinitions, executeUserToolCall } from './user.js';
+// Reporting & Analytics
+import { getReportingToolDefinitions, executeReportingToolCall } from './reporting.js';
+// ATF
+import { getAtfToolDefinitions, executeAtfToolCall } from './atf.js';
+// Now Assist / AI
+import { getNowAssistToolDefinitions, executeNowAssistToolCall } from './now-assist.js';
+// Scripting
+import { getScriptToolDefinitions, executeScriptToolCall } from './script.js';
+// Agile
+import { getAgileToolDefinitions, executeAgileToolCall } from './agile.js';
+
+// ─── Package Definitions ──────────────────────────────────────────────────────
+
+const PACKAGE_TOOL_NAMES: Record<string, string[]> = {
+  service_desk: [
+    // Core read
+    'query_records', 'get_record', 'get_user', 'get_group',
+    // Incident full lifecycle
+    'create_incident', 'get_incident', 'update_incident', 'resolve_incident', 'close_incident', 'add_work_note', 'add_comment',
+    // Approvals
+    'get_my_approvals', 'approve_request', 'reject_request',
+    // Knowledge read
+    'search_knowledge', 'get_knowledge_article', 'list_knowledge_bases',
+    // SLA
+    'get_sla_details', 'list_active_slas',
+    // Tasks
+    'get_task', 'list_my_tasks', 'complete_task',
+    // Natural language
+    'natural_language_search',
+  ],
+  change_coordinator: [
+    'query_records', 'get_record', 'get_user', 'get_group',
+    'create_change_request', 'get_change_request', 'update_change_request', 'list_change_requests', 'submit_change_for_approval', 'close_change_request',
+    'get_my_approvals', 'approve_request', 'reject_request',
+    'get_problem', 'list_change_requests',
+    'search_cmdb_ci', 'get_cmdb_ci', 'list_relationships',
+  ],
+  knowledge_author: [
+    'query_records', 'get_record', 'get_user',
+    'list_knowledge_bases', 'search_knowledge', 'get_knowledge_article', 'create_knowledge_article', 'update_knowledge_article', 'publish_knowledge_article',
+    'list_catalog_items', 'search_catalog', 'get_catalog_item',
+  ],
+  catalog_builder: [
+    'query_records', 'get_record', 'get_user',
+    'list_catalog_items', 'search_catalog', 'get_catalog_item', 'order_catalog_item',
+    'list_users', 'list_groups',
+  ],
+  system_administrator: [
+    'query_records', 'get_record', 'get_user', 'get_group', 'get_table_schema',
+    'list_users', 'create_user', 'update_user', 'list_groups', 'create_group', 'update_group', 'add_user_to_group', 'remove_user_from_group',
+    'list_reports', 'get_report', 'run_aggregate_query', 'trend_query', 'export_report_data', 'get_sys_log', 'list_scheduled_jobs',
+  ],
+  platform_developer: [
+    'query_records', 'get_record', 'get_table_schema',
+    'list_business_rules', 'get_business_rule', 'create_business_rule', 'update_business_rule',
+    'list_script_includes', 'get_script_include', 'create_script_include', 'update_script_include',
+    'list_client_scripts', 'get_client_script',
+    'list_changesets', 'get_changeset', 'commit_changeset', 'publish_changeset',
+    'list_atf_suites', 'get_atf_suite', 'run_atf_suite', 'list_atf_tests', 'get_atf_test', 'run_atf_test', 'get_atf_suite_result', 'list_atf_test_results', 'get_atf_failure_insight',
+  ],
+  itom_engineer: [
+    'query_records', 'get_record', 'get_table_schema',
+    'search_cmdb_ci', 'get_cmdb_ci', 'list_relationships', 'cmdb_health_dashboard', 'service_mapping_summary',
+    'list_discovery_schedules', 'list_mid_servers', 'list_active_events',
+    'run_aggregate_query', 'trend_query',
+  ],
+  agile_manager: [
+    'query_records', 'get_record', 'get_user',
+    'create_story', 'update_story', 'list_stories',
+    'create_epic', 'update_epic', 'list_epics',
+    'create_scrum_task', 'update_scrum_task', 'list_scrum_tasks',
+    'list_users',
+  ],
+  ai_developer: [
+    'query_records', 'get_record', 'natural_language_search',
+    'nlq_query', 'ai_search', 'generate_summary', 'suggest_resolution', 'categorize_incident',
+    'get_virtual_agent_topics', 'trigger_agentic_playbook', 'get_ms_copilot_topics', 'generate_work_notes', 'get_pi_models',
+    'search_knowledge', 'get_knowledge_article',
+  ],
+};
+
+// ─── All Tool Definitions ─────────────────────────────────────────────────────
+
+const ALL_TOOLS = [
+  ...getCoreToolDefinitions(),
+  ...getIncidentToolDefinitions(),
+  ...getProblemToolDefinitions(),
+  ...getChangeToolDefinitions(),
+  ...getTaskToolDefinitions(),
+  ...getKnowledgeToolDefinitions(),
+  ...getCatalogToolDefinitions(),
+  ...getUserToolDefinitions(),
+  ...getReportingToolDefinitions(),
+  ...getAtfToolDefinitions(),
+  ...getNowAssistToolDefinitions(),
+  ...getScriptToolDefinitions(),
+  ...getAgileToolDefinitions(),
+];
+
+// ─── Public API ───────────────────────────────────────────────────────────────
+
 export function getTools() {
-  return [
-    // Core Platform Tools
-    {
-      name: 'query_records',
-      description: 'Query ServiceNow records with filtering, field selection, pagination, and sorting',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          table: {
-            type: 'string',
-            description: 'Table name (e.g., "incident", "change_request", "problem")',
-          },
-          query: {
-            type: 'string',
-            description: 'Encoded query string using ServiceNow syntax (e.g., "active=true^priority=1"). Use ^ for AND, ^OR for OR, and dot-walking for related fields (e.g., "assignment_group.name=Database")',
-          },
-          fields: {
-            type: 'string',
-            description: 'Comma-separated list of fields to return (e.g., "number,short_description,state,assigned_to"). If omitted, all fields are returned.',
-          },
-          limit: {
-            type: 'number',
-            description: 'Maximum number of records to return (default: 10, max: 1000)',
-          },
-          orderBy: {
-            type: 'string',
-            description: 'Field to sort by. Prefix with "-" for descending order (e.g., "-sys_updated_on" for newest first)',
-          },
-        },
-        required: ['table'],
-      },
-    },
-    {
-      name: 'get_table_schema',
-      description: 'Get the structure and field information for a ServiceNow table',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          table: {
-            type: 'string',
-            description: 'Table name to get schema for (e.g., "incident", "change_request")',
-          },
-        },
-        required: ['table'],
-      },
-    },
-    {
-      name: 'get_record',
-      description: 'Retrieve complete details of a specific record by sys_id',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          table: {
-            type: 'string',
-            description: 'Table name (e.g., "incident")',
-          },
-          sys_id: {
-            type: 'string',
-            description: '32-character system ID of the record',
-          },
-          fields: {
-            type: 'string',
-            description: 'Optional comma-separated list of fields to return',
-          },
-        },
-        required: ['table', 'sys_id'],
-      },
-    },
-    {
-      name: 'get_user',
-      description: 'Look up user details by email or username',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          user_identifier: {
-            type: 'string',
-            description: 'Email address or username to search for',
-          },
-        },
-        required: ['user_identifier'],
-      },
-    },
-    {
-      name: 'get_group',
-      description: 'Find assignment group details by name or sys_id',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          group_identifier: {
-            type: 'string',
-            description: 'Group name or sys_id to search for',
-          },
-        },
-        required: ['group_identifier'],
-      },
-    },
+  const packageName = (process.env.MCP_TOOL_PACKAGE || 'full').toLowerCase();
 
-    // CMDB Tools
-    {
-      name: 'search_cmdb_ci',
-      description: 'Search for configuration items (CIs) in the CMDB using encoded query syntax',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          query: {
-            type: 'string',
-            description: 'Encoded query string (e.g., "sys_class_name=cmdb_ci_server^operational_status=1")',
-          },
-          limit: {
-            type: 'number',
-            description: 'Maximum number of CIs to return (default: 10, max: 100)',
-          },
-        },
-        required: [],
-      },
-    },
-    {
-      name: 'get_cmdb_ci',
-      description: 'Get complete information about a specific configuration item',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          ci_sys_id: {
-            type: 'string',
-            description: 'System ID of the configuration item',
-          },
-          fields: {
-            type: 'string',
-            description: 'Optional comma-separated list of fields to return',
-          },
-        },
-        required: ['ci_sys_id'],
-      },
-    },
-    {
-      name: 'list_relationships',
-      description: 'Show parent and child relationships for a configuration item',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          ci_sys_id: {
-            type: 'string',
-            description: 'System ID of the configuration item',
-          },
-        },
-        required: ['ci_sys_id'],
-      },
-    },
+  if (packageName === 'full') {
+    return ALL_TOOLS;
+  }
 
-    // ITOM Tools
-    {
-      name: 'list_discovery_schedules',
-      description: 'Check which discovery schedules are active and when they last ran',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          active_only: {
-            type: 'boolean',
-            description: 'Filter to only active schedules (default: false)',
-          },
-        },
-        required: [],
-      },
-    },
-    {
-      name: 'list_mid_servers',
-      description: 'Verify MID servers are up and healthy',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          active_only: {
-            type: 'boolean',
-            description: 'Filter to only servers with status "Up" (default: false)',
-          },
-        },
-        required: [],
-      },
-    },
-    {
-      name: 'list_active_events',
-      description: 'Monitor critical infrastructure events from monitoring tools',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          query: {
-            type: 'string',
-            description: 'Encoded query to filter events (e.g., "severity=1^node.nameLIKEPROD")',
-          },
-          limit: {
-            type: 'number',
-            description: 'Maximum number of events to return (default: 10)',
-          },
-        },
-        required: [],
-      },
-    },
-    {
-      name: 'cmdb_health_dashboard',
-      description: 'Get data quality metrics for CMDB (completeness of server and network CI data)',
-      inputSchema: {
-        type: 'object',
-        properties: {},
-        required: [],
-      },
-    },
-    {
-      name: 'service_mapping_summary',
-      description: 'Understand service dependencies for change impact analysis',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          service_sys_id: {
-            type: 'string',
-            description: 'System ID of the business service',
-          },
-        },
-        required: ['service_sys_id'],
-      },
-    },
+  const allowed = PACKAGE_TOOL_NAMES[packageName];
+  if (!allowed) {
+    console.error(`[WARN] Unknown MCP_TOOL_PACKAGE "${packageName}". Using "full".`);
+    return ALL_TOOLS;
+  }
 
-    // ITSM Tools
-    {
-      name: 'create_change_request',
-      description: 'Create a new change request record (requires WRITE_ENABLED=true)',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          short_description: {
-            type: 'string',
-            description: 'Brief summary of the change',
-          },
-          assignment_group: {
-            type: 'string',
-            description: 'Group name or sys_id to assign the change to',
-          },
-          description: {
-            type: 'string',
-            description: 'Detailed description of the change',
-          },
-          category: {
-            type: 'string',
-            description: 'Change category',
-          },
-          priority: {
-            type: 'number',
-            description: 'Priority (1=Critical, 2=High, 3=Moderate, 4=Low)',
-          },
-          risk: {
-            type: 'number',
-            description: 'Risk level (1=High, 2=Medium, 3=Low)',
-          },
-          impact: {
-            type: 'number',
-            description: 'Impact (1=High, 2=Medium, 3=Low)',
-          },
-        },
-        required: ['short_description', 'assignment_group'],
-      },
-    },
-
-    // Natural Language Tools
-    {
-      name: 'natural_language_search',
-      description: 'Search ServiceNow using plain English queries (experimental)',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          query: {
-            type: 'string',
-            description: 'Plain English search query (e.g., "find incidents about database issues")',
-          },
-          limit: {
-            type: 'number',
-            description: 'Maximum number of results (default: 10)',
-          },
-        },
-        required: ['query'],
-      },
-    },
-    {
-      name: 'natural_language_update',
-      description: 'Update a record using conversational language (experimental, requires WRITE_ENABLED=true)',
-      inputSchema: {
-        type: 'object',
-        properties: {
-          instruction: {
-            type: 'string',
-            description: 'Natural language instruction (e.g., "Update incident INC0010001 to say I\'m working on it")',
-          },
-          table: {
-            type: 'string',
-            description: 'Table name',
-          },
-        },
-        required: ['instruction', 'table'],
-      },
-    },
-  ];
+  const allowedSet = new Set(allowed);
+  return ALL_TOOLS.filter(t => allowedSet.has(t.name));
 }
 
 export async function executeTool(
@@ -323,199 +145,27 @@ export async function executeTool(
   name: string,
   args: Record<string, any>
 ): Promise<any> {
-  // Check write permissions for write operations
-  const writeEnabled = process.env.WRITE_ENABLED === 'true';
+  // Try each domain handler in order; first non-null result wins
+  const handlers = [
+    () => executeCoreToolCall(client, name, args),
+    () => executeIncidentToolCall(client, name, args),
+    () => executeProblemToolCall(client, name, args),
+    () => executeChangeToolCall(client, name, args),
+    () => executeTaskToolCall(client, name, args),
+    () => executeKnowledgeToolCall(client, name, args),
+    () => executeCatalogToolCall(client, name, args),
+    () => executeUserToolCall(client, name, args),
+    () => executeReportingToolCall(client, name, args),
+    () => executeAtfToolCall(client, name, args),
+    () => executeNowAssistToolCall(client, name, args),
+    () => executeScriptToolCall(client, name, args),
+    () => executeAgileToolCall(client, name, args),
+  ];
 
-  switch (name) {
-    case 'query_records':
-      return await executeQueryRecords(client, args as QueryRecordsParams);
-
-    case 'get_table_schema':
-      return await executeGetTableSchema(client, args.table);
-
-    case 'get_record':
-      return await executeGetRecord(client, args as GetRecordParams);
-
-    case 'get_user':
-      return await executeGetUser(client, args as GetUserParams);
-
-    case 'get_group':
-      return await executeGetGroup(client, args as GetGroupParams);
-
-    case 'search_cmdb_ci':
-      return await executeSearchCmdbCi(client, args as SearchCmdbCiParams);
-
-    case 'get_cmdb_ci':
-      return await executeGetCmdbCi(client, args as GetCmdbCiParams);
-
-    case 'list_relationships':
-      return await executeListRelationships(client, args as ListRelationshipsParams);
-
-    case 'list_discovery_schedules':
-      return await executeListDiscoverySchedules(client, args as ListDiscoverySchedulesParams);
-
-    case 'list_mid_servers':
-      return await executeListMidServers(client, args as ListMidServersParams);
-
-    case 'list_active_events':
-      return await executeListActiveEvents(client, args as ListActiveEventsParams);
-
-    case 'cmdb_health_dashboard':
-      return await executeCmdbHealthDashboard(client);
-
-    case 'service_mapping_summary':
-      return await executeServiceMappingSummary(client, args as ServiceMappingSummaryParams);
-
-    case 'create_change_request':
-      if (!writeEnabled) {
-        throw new ServiceNowError(
-          'Write operations are disabled. Set WRITE_ENABLED=true to create change requests.',
-          'WRITE_NOT_ENABLED'
-        );
-      }
-      return await executeCreateChangeRequest(client, args as CreateChangeRequestParams);
-
-    case 'natural_language_search':
-      return await executeNaturalLanguageSearch(client, args as NaturalLanguageSearchParams);
-
-    case 'natural_language_update':
-      if (!writeEnabled) {
-        throw new ServiceNowError(
-          'Write operations are disabled. Set WRITE_ENABLED=true to update records.',
-          'WRITE_NOT_ENABLED'
-        );
-      }
-      return await executeNaturalLanguageUpdate(client, args as NaturalLanguageUpdateParams);
-
-    default:
-      throw new ServiceNowError(`Unknown tool: ${name}`, 'UNKNOWN_TOOL');
-  }
-}
-
-// Tool execution functions
-
-async function executeQueryRecords(
-  client: ServiceNowClient,
-  params: QueryRecordsParams
-): Promise<any> {
-  if (!params.table) {
-    throw new ServiceNowError('Table name is required', 'INVALID_REQUEST');
+  for (const handler of handlers) {
+    const result = await handler();
+    if (result !== null) return result;
   }
 
-  if (params.limit !== undefined && (params.limit < 1 || params.limit > 1000)) {
-    throw new ServiceNowError('Limit must be between 1 and 1000', 'INVALID_REQUEST');
-  }
-
-  const response = await client.queryRecords(params);
-
-  return {
-    count: response.count,
-    records: response.records,
-    summary: `Found ${response.count} record(s) in table "${params.table}"${params.query ? ` matching query: ${params.query}` : ''}`,
-  };
-}
-
-async function executeGetTableSchema(client: ServiceNowClient, table: string): Promise<any> {
-  if (!table) {
-    throw new ServiceNowError('Table name is required', 'INVALID_REQUEST');
-  }
-
-  return await client.getTableSchema(table);
-}
-
-async function executeGetRecord(client: ServiceNowClient, params: GetRecordParams): Promise<any> {
-  if (!params.table || !params.sys_id) {
-    throw new ServiceNowError('Table name and sys_id are required', 'INVALID_REQUEST');
-  }
-
-  return await client.getRecord(params.table, params.sys_id, params.fields);
-}
-
-async function executeGetUser(client: ServiceNowClient, params: GetUserParams): Promise<any> {
-  if (!params.user_identifier) {
-    throw new ServiceNowError('User identifier is required', 'INVALID_REQUEST');
-  }
-
-  return await client.getUser(params.user_identifier);
-}
-
-async function executeGetGroup(client: ServiceNowClient, params: GetGroupParams): Promise<any> {
-  if (!params.group_identifier) {
-    throw new ServiceNowError('Group identifier is required', 'INVALID_REQUEST');
-  }
-
-  return await client.getGroup(params.group_identifier);
-}
-
-async function executeSearchCmdbCi(client: ServiceNowClient, params: SearchCmdbCiParams): Promise<any> {
-  return await client.searchCmdbCi(params.query, params.limit);
-}
-
-async function executeGetCmdbCi(client: ServiceNowClient, params: GetCmdbCiParams): Promise<any> {
-  if (!params.ci_sys_id) {
-    throw new ServiceNowError('CI sys_id is required', 'INVALID_REQUEST');
-  }
-
-  return await client.getCmdbCi(params.ci_sys_id, params.fields);
-}
-
-async function executeListRelationships(client: ServiceNowClient, params: ListRelationshipsParams): Promise<any> {
-  if (!params.ci_sys_id) {
-    throw new ServiceNowError('CI sys_id is required', 'INVALID_REQUEST');
-  }
-
-  return await client.listRelationships(params.ci_sys_id);
-}
-
-async function executeListDiscoverySchedules(client: ServiceNowClient, params: ListDiscoverySchedulesParams): Promise<any> {
-  return await client.listDiscoverySchedules(params.active_only);
-}
-
-async function executeListMidServers(client: ServiceNowClient, params: ListMidServersParams): Promise<any> {
-  return await client.listMidServers(params.active_only);
-}
-
-async function executeListActiveEvents(client: ServiceNowClient, params: ListActiveEventsParams): Promise<any> {
-  return await client.listActiveEvents(params.query, params.limit);
-}
-
-async function executeCmdbHealthDashboard(client: ServiceNowClient): Promise<any> {
-  return await client.cmdbHealthDashboard();
-}
-
-async function executeServiceMappingSummary(client: ServiceNowClient, params: ServiceMappingSummaryParams): Promise<any> {
-  if (!params.service_sys_id) {
-    throw new ServiceNowError('Service sys_id is required', 'INVALID_REQUEST');
-  }
-
-  return await client.serviceMappingSummary(params.service_sys_id);
-}
-
-async function executeCreateChangeRequest(client: ServiceNowClient, params: CreateChangeRequestParams): Promise<any> {
-  if (!params.short_description || !params.assignment_group) {
-    throw new ServiceNowError('short_description and assignment_group are required', 'INVALID_REQUEST');
-  }
-
-  const result = await client.createChangeRequest(params);
-
-  return {
-    ...result,
-    summary: `Created change request ${result.number || result.sys_id}`,
-  };
-}
-
-async function executeNaturalLanguageSearch(client: ServiceNowClient, params: NaturalLanguageSearchParams): Promise<any> {
-  if (!params.query) {
-    throw new ServiceNowError('Query is required', 'INVALID_REQUEST');
-  }
-
-  return await client.naturalLanguageSearch(params.query, params.limit);
-}
-
-async function executeNaturalLanguageUpdate(client: ServiceNowClient, params: NaturalLanguageUpdateParams): Promise<any> {
-  if (!params.instruction || !params.table) {
-    throw new ServiceNowError('Instruction and table are required', 'INVALID_REQUEST');
-  }
-
-  return await client.naturalLanguageUpdate(params.instruction, params.table);
+  throw new ServiceNowError(`Unknown tool: ${name}`, 'UNKNOWN_TOOL');
 }

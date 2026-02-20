@@ -692,6 +692,112 @@ export class ServiceNowClient {
   }
 
   /**
+   * Create a record in any ServiceNow table
+   */
+  async createRecord(table: string, data: Record<string, any>): Promise<ServiceNowRecord> {
+    await this.authenticate();
+    logger.info(`Creating record in ${table}`);
+    const url = `${this.baseUrl}/api/now/table/${table}`;
+    try {
+      const response = await this.request<ServiceNowApiResponse<ServiceNowRecord>>(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+      });
+      return response.result;
+    } catch (error) {
+      if (error instanceof ServiceNowError) throw error;
+      throw new ServiceNowError(
+        `Failed to create record in ${table}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        'CREATE_FAILED'
+      );
+    }
+  }
+
+  /**
+   * Update a record in any ServiceNow table
+   */
+  async updateRecord(table: string, sysId: string, data: Record<string, any>): Promise<ServiceNowRecord> {
+    await this.authenticate();
+    logger.info(`Updating record ${sysId} in ${table}`);
+    const url = `${this.baseUrl}/api/now/table/${table}/${sysId}`;
+    try {
+      const response = await this.request<ServiceNowApiResponse<ServiceNowRecord>>(url, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+      });
+      return response.result;
+    } catch (error) {
+      if (error instanceof ServiceNowError) throw error;
+      throw new ServiceNowError(
+        `Failed to update record ${sysId} in ${table}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        'UPDATE_FAILED'
+      );
+    }
+  }
+
+  /**
+   * Delete a record from any ServiceNow table
+   */
+  async deleteRecord(table: string, sysId: string): Promise<void> {
+    await this.authenticate();
+    logger.info(`Deleting record ${sysId} from ${table}`);
+    const url = `${this.baseUrl}/api/now/table/${table}/${sysId}`;
+    try {
+      await this.request<void>(url, { method: 'DELETE' });
+    } catch (error) {
+      if (error instanceof ServiceNowError) throw error;
+      throw new ServiceNowError(
+        `Failed to delete record ${sysId} from ${table}: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        'DELETE_FAILED'
+      );
+    }
+  }
+
+  /**
+   * Call Now Assist / Generative AI endpoints (Zurich)
+   */
+  async callNowAssist(endpoint: string, payload: Record<string, any>): Promise<any> {
+    await this.authenticate();
+    logger.info(`Calling Now Assist endpoint: ${endpoint}`);
+    const url = `${this.baseUrl}${endpoint}`;
+    try {
+      const response = await this.request<any>(url, {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      });
+      return response;
+    } catch (error) {
+      if (error instanceof ServiceNowError) throw error;
+      throw new ServiceNowError(
+        `Now Assist call failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        'NOW_ASSIST_ERROR'
+      );
+    }
+  }
+
+  /**
+   * Run aggregate/stats query on a table (Zurich Reporting API)
+   */
+  async runAggregateQuery(table: string, groupBy: string, _aggregate: string = 'COUNT', query?: string): Promise<any> {
+    await this.authenticate();
+    const params = new URLSearchParams();
+    params.set('sysparm_group_by', groupBy);
+    if (query) params.set('sysparm_query', query);
+    params.set('sysparm_count', 'true');
+    const url = `${this.baseUrl}/api/now/stats/${table}?${params.toString()}`;
+    try {
+      const response = await this.request<any>(url);
+      return response.result;
+    } catch (error) {
+      if (error instanceof ServiceNowError) throw error;
+      throw new ServiceNowError(
+        `Aggregate query failed: ${error instanceof Error ? error.message : 'Unknown error'}`,
+        'QUERY_FAILED'
+      );
+    }
+  }
+
+  /**
    * Natural language search (simplified implementation)
    */
   async naturalLanguageSearch(query: string, limit: number = 10): Promise<any> {
