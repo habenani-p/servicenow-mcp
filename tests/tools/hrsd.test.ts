@@ -1,6 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { executeHrsdToolCall } from '../../src/tools/hrsd.js';
-import { ServiceNowError } from '../../src/utils/errors.js';
 
 const mockClient: any = {
   createRecord: vi.fn(),
